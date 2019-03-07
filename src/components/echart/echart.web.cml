@@ -1,18 +1,13 @@
 <template>
   <view>
     <text>web端自定义组件</text>
-     <chart class="mychart_dom_bar"
-        :options="chartData"
-        :init-options="initOptions"
+      <chart :options="chartData"
         ref="bar"
-        theme="ovilia-green"
-        auto-resize
-      />
+        theme="ovilia-green"/>
   </view>
 </template>
 
 <script>
-
 class Echart implements EchartInterface {
   props = {
     name: {
@@ -67,14 +62,13 @@ export default new Echart();
 </script>
 
 <style >
-
 </style>
 
 <script cml-type="json">
 {
   "base": {
     "usingComponents": {
-      "chart": "vue-echarts/components/ECharts"
+      "chart": "./web/echart"
     }
   }
 }

@@ -13,7 +13,6 @@
     "chameleon-store": "0.0.3",
     "chameleon-ui-builtin": "0.0.6",
     "cml-ui": "0.0.6",
-    "echarts": "^4.1.0",
-    "vue-echarts": "^4.0.1"
+    "echarts": "^4.1.0"
   }
 }

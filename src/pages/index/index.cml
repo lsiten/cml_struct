@@ -3,7 +3,7 @@
     <view class="page-container">
       <view class="scroller-wrap">
           <demo-com imageSrc="{{ chameleonSrc }}"></demo-com>
-         <echart name="hi0001" :chartData='chartData'></echart>
+          <echart name="hi0001" :chartData='chartData'></echart>
         </view>
     </view>
   </page>
@@ -16,6 +16,9 @@ class Index  {
     title: "chameleon",
     chartData: getCartData(),
     chameleonSrc: require('../../assets/images/chameleon.png')
+  }
+  created() {
+    // console.log(this.chartData)
   }
 }
 

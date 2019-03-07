@@ -10,8 +10,8 @@
       "integrity": "sha512-3voN7q29/mApCpH4D58dQds2GjmhI7s1DbBpsdg46yKwMHYwW2B7dr6KyVNecnjOHU1fCRs+lgxyB7n4/voQ4Q==",
       "requires": {
         "chameleon-bridge": "0.1.0",
-        "fetch-detector": "^1.0.1",
-        "fetch-ie8": "^1.5.0"
+        "fetch-detector": "1.0.1",
+        "fetch-ie8": "1.5.0"
       }
     },
     "chameleon-bridge": {
@@ -64,8 +64,8 @@
     },
     "echarts": {
       "version": "4.1.0",
-      "resolved": "https://registry.npmjs.org/echarts/-/echarts-4.1.0.tgz",
-      "integrity": "sha512-gP1e1fNnAj9KJpTDLXV21brklbfJlqeINmpQDJCDta9TX3cPoqyQOiDVcEPzbOVHqgBRgTOwNxC5iGwJ89014A==",
+      "resolved": "http://registry.npm.taobao.org/echarts/download/echarts-4.1.0.tgz",
+      "integrity": "sha1-1YjJX3PBqZKLnHPVt2l1HDGFvNw=",
       "requires": {
         "zrender": "4.0.4"
       }
@@ -80,29 +80,10 @@
       "resolved": "https://registry.npmjs.org/fetch-ie8/-/fetch-ie8-1.5.0.tgz",
       "integrity": "sha1-8RQcP5bLyJN6oxsPvBp3AiD7wVs="
     },
-    "lodash": {
-      "version": "4.17.11",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.17.11.tgz",
-      "integrity": "sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg=="
-    },
     "mobx": {
       "version": "3.6.1",
       "resolved": "https://registry.npmjs.org/mobx/-/mobx-3.6.1.tgz",
       "integrity": "sha1-rmOo8A4UhadA0Pka4val9o4wO+o="
-    },
-    "resize-detector": {
-      "version": "0.1.10",
-      "resolved": "https://registry.npmjs.org/resize-detector/-/resize-detector-0.1.10.tgz",
-      "integrity": "sha512-iLcXC8A6Fb0DfA+TRiywrK/0A22bFqkhntjMJMEzXDA4XkcEkfwpNbv7W8iewUiD0xYIaeiXOfiEehTqGKsUFw=="
-    },
-    "vue-echarts": {
-      "version": "4.0.1",
-      "resolved": "https://registry.npmjs.org/vue-echarts/-/vue-echarts-4.0.1.tgz",
-      "integrity": "sha512-JgvIcr/btz4bAkafVm0aLyfkAdhGf2T8VIdESd2264Mlr5w0dZ0IOG3BJCvtznIlBJMiwQXAztc27Y3KGKdF5Q==",
-      "requires": {
-        "lodash": "^4.17.11",
-        "resize-detector": "^0.1.9"
-      }
     },
     "vuex": {
       "version": "3.0.1",
@@ -111,8 +92,8 @@
     },
     "zrender": {
       "version": "4.0.4",
-      "resolved": "https://registry.npmjs.org/zrender/-/zrender-4.0.4.tgz",
-      "integrity": "sha512-03Vd/BDl/cPXp8E61f5+Xbgr/a4vDyFA+uUtUc1s+5KgcPbyY2m+78R/9LQwkR6QwFYHG8qk25Q8ESGs/qpkZw=="
+      "resolved": "http://registry.npm.taobao.org/zrender/download/zrender-4.0.4.tgz",
+      "integrity": "sha1-kQ5g2IjwDJWZBz8jdY3SM0X+SP0="
     }
   }
 }

@@ -1,21 +1,32 @@
 <template>
-  <view>
-    <text>wx端自定义组件</text>
-    <text>props:{{name}}</text>
+  <view class="container">
+    <ec-canvas class="lsiten-echart" id="{{ canvasId }}" canvas-id="{{ canvasId }}" ec="{{ this.initEchart }}"></ec-canvas>
   </view>
 </template>
 
 <script>
-
+import * as echarts from './ec-canvas/echarts'
 class Echart implements EchartInterface {
   props = {
     name: {
       type: String,
-      default: '默认值'
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    canvasId: {
+      type: String,
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    chartData: {
+      type: Object,
+      default: {}
     }
   }
 
   data = {
+    ec: {
+      lazyLoad: true 
+    },
+    echart: null
   }
 
   computed = {
@@ -25,6 +36,21 @@ class Echart implements EchartInterface {
   }
 
   methods = {
+    initEchart () {
+      this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
+        this.initEchartData(canvas, width, height, this.chartData)
+      })
+    },
+    initEchartData (canvas, width, height, data) {
+      debugger
+      this.echart = this.echart ? this.echart : echarts.init(canvas, null, {
+        width: width,
+        height: height
+      })
+      this.echart.clear()
+      this.echart.setOption(data)
+      return this.echart
+    }
   }
 
   beforeCreate() {
@@ -37,6 +63,8 @@ class Echart implements EchartInterface {
   }
 
   mounted() {
+    console.log(this.chartData)
+    this.initEchart()
     this.$cmlEmit('onshow',{
       value: this.name
     })
@@ -53,13 +81,19 @@ export default new Echart();
 </script>
 
 <style >
-
+.mychart_dom_bar,
+.container{
+  height: 400px;
+  width: 100%;
+}
 </style>
 
 <script cml-type="json">
 {
   "base": {
-    "usingComponents": {}
+    "usingComponents": {
+      "ec-canvas": "./ec-canvas/ec-canvas"
+    }
   },
   "wx": {
     "window": {
