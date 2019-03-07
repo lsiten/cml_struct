@@ -1,0 +1,84 @@
+<template>
+  <view>
+    <text>web端自定义组件</text>
+     <chart class="mychart_dom_bar"
+        :options="chartData"
+        :init-options="initOptions"
+        ref="bar"
+        theme="ovilia-green"
+        auto-resize
+      />
+  </view>
+</template>
+
+<script>
+
+class Echart implements EchartInterface {
+  props = {
+    name: {
+      type: String,
+      default: '默认值'
+    },
+    chartData: {
+      type: Object,
+      default: {}
+    }
+  }
+
+  data = {
+    initOptions: {
+      renderer: 'canvas'
+    }
+  }
+
+  computed = {
+  }
+
+  watch = {
+  }
+  
+  methods = {
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+    console.log(this.chartData)    
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+    this.$cmlEmit('onshow',{
+      value: this.name
+    })
+  }
+
+  beforeDestroy() {
+  }
+  
+  destroyed() {
+  }
+}
+
+export default new Echart();
+</script>
+
+<style >
+
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "chart": "vue-echarts/components/ECharts"
+    }
+  }
+}
+</script>
+
+
+

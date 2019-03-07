@@ -1,0 +1,47 @@
+<template>
+  <page title="chameleon">
+    <view class="page-container">
+      <view class="scroller-wrap">
+          <demo-com imageSrc="{{ chameleonSrc }}"></demo-com>
+         <echart name="hi0001" :chartData='chartData'></echart>
+        </view>
+    </view>
+  </page>
+</template>
+
+<script>
+import getCartData from './bar.js'
+class Index  {
+  data = {
+    title: "chameleon",
+    chartData: getCartData(),
+    chameleonSrc: require('../../assets/images/chameleon.png')
+  }
+}
+
+export default new Index();
+
+</script>
+<style>
+
+echart{
+  height: 500cpx;
+  width: 500cpx;
+}
+
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "echart": "/components/echart/echart",
+      "demo-com": "/components/demo-com/demo-com"
+    }
+  },
+  "wx": {
+    "navigationBarTitleText": "index",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#E2E2E2"
+  }
+}
+</script>
