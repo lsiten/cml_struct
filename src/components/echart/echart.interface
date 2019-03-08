@@ -14,7 +14,7 @@
 type EventDetail = {
   value: String
 }
-type sizeObject = {
+type sizeObj = {
   width: String,
   height: String
 }
@@ -22,6 +22,7 @@ interface EchartInterface {
   name: String,
   chartDataId: String,
   canvasId: String,
+  size: sizeObj,
   onshow(eventDetail: EventDetail): void;
 }
 </script>

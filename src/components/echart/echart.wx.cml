@@ -7,6 +7,8 @@
 <script>
 import * as echarts from './ec-canvas/echarts'
 import getData from '../../units/echart/echartData.js'
+import {toJS} from 'mobx'
+let echart = null
 class Echart implements EchartInterface {
   props = {
     name: {
@@ -48,14 +50,14 @@ class Echart implements EchartInterface {
       })
     },
     initEchartData (canvas, width, height) {
-      this.echart = this.echart ? this.echart : echarts.init(canvas, null, {
+      echart = echart ? echart : echarts.init(canvas, null, {
         width: width,
         height: height
       })
-      this.echart.clear()
+      echart.clear()
       let data = getData(this.chartDataId)
-      this.echart.setOption(data)
-      return this.echart
+      echart.setOption(data)
+      return echart
     }
   }
 

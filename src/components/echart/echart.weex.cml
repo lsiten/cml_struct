@@ -26,10 +26,12 @@ class Echart implements EchartInterface {
     }
   }
    data= {
-    h5url: "http://10.8.10.131:8000/weex/echartWeb"
+    h5url: "http://192.168.0.104:8000/weex/echartWeb"
+    // h5url: "https://www.baidu.com"
   }
   created() {
     this.h5url = this.h5url + '?param=' + this.chartDataId + '&w=' + this.size.width + '&h=' + this.size.height
+    console.log(this.h5url)
   }
   methods = {
     reload (event) {

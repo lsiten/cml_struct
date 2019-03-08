@@ -45,6 +45,9 @@ cml.config.merge({
       publicPath: `${publicPath}/wx/`,
       apiPrefix
     }
+  },
+  proxy: {
+    enable: true,
   }
 })
 

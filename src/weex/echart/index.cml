@@ -7,17 +7,26 @@
 <script>
 class Index  {
   data = {
+    size: {
+      width: '100%',
+      height: '400px'
+    },
+    param: 'param1'
   }
   beforeCreate(query) {
-    this.param = query.param || 'param1'
-    this.size = {
+    this.paramTeml = query.param || 'param1'
+    this.sizeTemp = {
       width: query.w || '100%',
       height: query.h || '400px'
     }
-    console.log(this.size)
+    alert(JSON.stringify(query))
   }
   created() {
+    this.size = JSON.parse(JSON.stringify(this.sizeTemp))
+    this.param = this.paramTeml
+    alert(JSON.stringify(this.size))
     console.log(this.param)
+    console.log(this.size)
   }
 }
 
