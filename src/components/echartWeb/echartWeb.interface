@@ -14,10 +14,6 @@
 type EventDetail = {
   value: String
 }
-type sizeObject = {
-  width: String,
-  height: String
-}
 interface EchartInterface {
   name: String,
   chartDataId: String,

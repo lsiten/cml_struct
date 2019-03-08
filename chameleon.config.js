@@ -35,6 +35,7 @@ cml.config.merge({
   },
   weex: {
     dev: {
+      console: true
     },
     build: {
       publicPath: `${publicPath}/weex/`,

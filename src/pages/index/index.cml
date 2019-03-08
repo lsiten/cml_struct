@@ -3,33 +3,33 @@
     <view class="page-container">
       <view class="scroller-wrap">
           <demo-com imageSrc="{{ chameleonSrc }}"></demo-com>
-          <echart name="hi0001" :chartData='chartData'></echart>
+          <echart class="lsiten-echart" name="hi0001" size='{{size}}' chartDataId='{{chartData}}'></echart>
         </view>
     </view>
   </page>
 </template>
 
 <script>
-import getCartData from './bar.js'
+import cml from 'chameleon-api'
 class Index  {
   data = {
     title: "chameleon",
-    chartData: getCartData(),
+    chartData: 'params1',
+    size: {width: '100%', height: '400px'},
     chameleonSrc: require('../../assets/images/chameleon.png')
   }
   created() {
-    // console.log(this.chartData)
+    this.size.height = cml.cpx2px(600) + 'px';
   }
 }
 
 export default new Index();
 
 </script>
-<style>
-
-echart{
+<style scoped>
+.lsiten-echart {
+  flex: 1;
   height: 500cpx;
-  width: 500cpx;
 }
 
 </style>

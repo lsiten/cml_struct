@@ -1,0 +1,36 @@
+<template>
+  <view class="scroller-wrap" style="width: {{size.width}}; height: {{size.height}};">
+    <echart class="lsiten-echart"  size='{{size}}' chartDataId='{{param}}'></echart>
+  </view>
+</template>
+
+<script>
+class Index  {
+  data = {
+  }
+  beforeCreate(query) {
+    this.param = query.param || 'param1'
+    this.size = {
+      width: query.w || '100%',
+      height: query.h || '400px'
+    }
+  }
+  created() {
+    console.log(this.param)
+  }
+}
+
+export default new Index();
+
+</script>
+<style>
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "echart": "/components/echart/echart"
+    }
+  }
+}
+</script>

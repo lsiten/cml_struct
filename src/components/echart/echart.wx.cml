@@ -1,24 +1,29 @@
 <template>
   <view class="container">
-    <ec-canvas class="lsiten-echart" id="{{ canvasId }}" canvas-id="{{ canvasId }}" ec="{{ this.initEchart }}"></ec-canvas>
+    <ec-canvas class="lsiten-echart" style="width: {{size.width}}; height: {{size.height}};" id="{{ canvasId }}" canvas-id="{{ canvasId }}" ec="{{ ec }}"></ec-canvas>
   </view>
 </template>
 
 <script>
 import * as echarts from './ec-canvas/echarts'
+import getData from '../../units/echart/echartData.js'
 class Echart implements EchartInterface {
   props = {
     name: {
       type: String,
       default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
     },
+    size: {
+      type: Object,
+      default: () => {return {width: '100%', height: '400px'}}
+    },
     canvasId: {
       type: String,
       default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
     },
-    chartData: {
-      type: Object,
-      default: {}
+    chartDataId: {
+      type: String,
+      default: 'params1'
     }
   }
 
@@ -26,7 +31,8 @@ class Echart implements EchartInterface {
     ec: {
       lazyLoad: true 
     },
-    echart: null
+    echart: null,
+    chartData: {},
   }
 
   computed = {
@@ -38,16 +44,16 @@ class Echart implements EchartInterface {
   methods = {
     initEchart () {
       this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
-        this.initEchartData(canvas, width, height, this.chartData)
+        this.initEchartData(canvas, width, height)
       })
     },
-    initEchartData (canvas, width, height, data) {
-      debugger
+    initEchartData (canvas, width, height) {
       this.echart = this.echart ? this.echart : echarts.init(canvas, null, {
         width: width,
         height: height
       })
       this.echart.clear()
+      let data = getData(this.chartDataId)
       this.echart.setOption(data)
       return this.echart
     }
@@ -63,7 +69,6 @@ class Echart implements EchartInterface {
   }
 
   mounted() {
-    console.log(this.chartData)
     this.initEchart()
     this.$cmlEmit('onshow',{
       value: this.name
@@ -81,7 +86,7 @@ export default new Echart();
 </script>
 
 <style >
-.mychart_dom_bar,
+.lsiten-echart,
 .container{
   height: 400px;
   width: 100%;

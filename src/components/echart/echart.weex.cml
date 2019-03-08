@@ -1,38 +1,68 @@
 <template>
   <view>
-    <text>weex端自定义组件</text>
-    <text>props:{{name}}</text>
+     <origin-web ref="webview" style="width: {{size.width}}; height: {{size.height}};" src="{{h5url}}" onpagestart="pagestart" onpagefinish="pagefinish" onerror="error"></origin-web>
   </view>
 </template>
 
 <script>
-
+const webview = weex.requireModule('webview');
 class Echart implements EchartInterface {
   props = {
     name: {
       type: String,
-      default: '默认值'
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    size: {
+      type: Object,
+      default: () => {return {width: '100%', height: '400px'}}
+    },
+    canvasId: {
+      type: String,
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    chartDataId: {
+      type: String,
+      default: 'param1'
     }
   }
-
+   data= {
+    h5url: "http://10.8.10.131:8000/weex/echartWeb"
+  }
+  created() {
+    this.h5url = this.h5url + '?param=' + this.chartDataId + '&w=' + this.size.width + '&h=' + this.size.height
+  }
+  methods = {
+    reload (event) {
+      webview.reload(this.$refs.webview)
+    },
+    start (event) {
+    },
+    finish (event) {
+    },
+    error (event) {
+    }
+  }
   mounted() {
     this.$cmlEmit('onshow',{
       value: this.name
     })
+    setTimeout(() => {
+      this.reload();
+    },1000);
   }
 }
 
 export default new Echart();
 </script>
 
-<style >
-
+<style scoped>
 </style>
 
 <script cml-type="json">
 {
   "base": {
-    "usingComponents": {}
+    "usingComponents": {
+    }
   }
 }
 </script>
