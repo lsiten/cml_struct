@@ -14,6 +14,7 @@ class Index  {
       width: query.w || '100%',
       height: query.h || '400px'
     }
+    console.log(this.size)
   }
   created() {
     console.log(this.param)
