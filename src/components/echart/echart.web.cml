@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import cml from 'chameleon-api'
 import getData from '../../units/echart/echartData.js'
 class Echart implements EchartInterface {
   props = {
@@ -49,6 +50,9 @@ class Echart implements EchartInterface {
   }
 
   created() {
+    // sizePx 单位统一为px
+    this.size.height.indexOf('cpx') > 0 &&  (this.size.height = cml.cpx2px(parseFloat(this.size.height)) + 'px')
+    this.size.width.indexOf('cpx') > 0 &&  (this.size.width = cml.cpx2px(parseFloat(this.size.width)) + 'px')
     this.chartData = getData(this.chartDataId)
   }
 

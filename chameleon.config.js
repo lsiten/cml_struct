@@ -19,7 +19,7 @@ cml.config.merge({
     }
   },
   check: {
-    enable: true,
+    enable: false,
     enableTypes: ["Object","Array","Nullable"]
   },
   web: {
@@ -47,7 +47,7 @@ cml.config.merge({
     }
   },
   proxy: {
-    enable: true,
+    // enable: true,
   }
 })
 

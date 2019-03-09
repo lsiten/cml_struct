@@ -3,23 +3,24 @@
     <view class="page-container">
       <view class="scroller-wrap">
           <demo-com imageSrc="{{ chameleonSrc }}"></demo-com>
-          <echart class="lsiten-echart" name="hi0001" size='{{size}}' chartDataId='{{chartData}}'></echart>
+          <echart class="lsiten-echart" name="hi0001" size="{{ size }}" chartDataId="{{ chartData }}"></echart>
         </view>
     </view>
   </page>
 </template>
 
 <script>
-import cml from 'chameleon-api'
 class Index  {
   data = {
     title: "chameleon",
     chartData: 'params1',
-    size: {width: '100%', height: '400px'},
+    size: {
+      width: '100%',
+      height: '600cpx'
+    },
     chameleonSrc: require('../../assets/images/chameleon.png')
   }
   created() {
-    this.size.height = cml.cpx2px(600) + 'px';
   }
 }
 
@@ -27,11 +28,6 @@ export default new Index();
 
 </script>
 <style scoped>
-.lsiten-echart {
-  flex: 1;
-  height: 500cpx;
-}
-
 </style>
 <script cml-type="json">
 {
