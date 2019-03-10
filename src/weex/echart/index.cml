@@ -20,11 +20,9 @@ class Index  {
   beforeCreate(query) {
     this.paramTeml = query.param || 'param1'
     this.sizeTemp = {
-      width: query.w || '100%',
-      height: query.h || '400px'
+      width: query.w ? query.w : '100%',
+      height: query.h ? query.h : '600cpx'
     }
-    alert(window.location.href)
-    alert(JSON.stringify(query))
   }
   created() {
     this.size = JSON.parse(JSON.stringify(this.sizeTemp))

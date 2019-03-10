@@ -34,20 +34,17 @@ class Echart implements EchartInterface {
   }
    data= {
     h5url: "",
-    baseH5: "http://10.8.10.131:8000/weex/echartWeb",
+    // baseH5: "http://10.8.10.131:8000/weex/echartWeb",
+    baseH5: "http://192.168.0.104:8000/weex/echartWeb",
     // h5url: "https://www.baidu.com"
   }
   created() {
+    this.size.height.indexOf('cpx') < 0 && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
+    this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
+    this.h5url = (this.baseH5 +  '?param=' + this.chartDataId + '&w=' + encodeURI(this.size.width) + '&h=' + encodeURI(this.size.height))
   }
   methods = {
     reload (event) {
-      this.size.height.indexOf('cpx') < 0 && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
-      this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
-      this.h5url = this.baseH5 + '?param=' + this.chartDataId + '&w=' + this.size.width + '&h=' + this.size.height
-      cml.alert({
-          message: this.h5url,
-          confirmTitle:"确定"
-      })
       webview.reload(this.$refs.webview)
     },
     start (event) {

@@ -65,13 +65,8 @@ class Echart implements EchartInterface {
   }
 
   created() {
-    // size 单位统一为cpx
-     !this.size && (this.size = {
-      width: '100%',
-      height: '600cpx'
-    })
-     this.size.height.indexOf('cpx') < 0 && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
-     this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
+     (this.size.height.indexOf('cpx') < 0  && this.size.height.indexOf('rpx') < 0 ) && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
+     (this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('rpx') < 0) && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
      
   }
 
