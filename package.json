@@ -7,9 +7,10 @@
   "scripts": {},
   "license": "MIT",
   "dependencies": {
+    "@antv/f2": "^3.3.5",
     "chameleon-api": "0.1.0",
     "chameleon-bridge": "0.1.0",
-    "chameleon-runtime": "0.0.9",
+    "chameleon-runtime": "^0.0.9",
     "chameleon-store": "0.0.3",
     "chameleon-ui-builtin": "0.0.6",
     "cml-ui": "0.0.6",

@@ -1,0 +1,80 @@
+<template>
+  <view>
+     <origin-web
+       ref="webview"
+       style="width: {{size.width}}; height: {{size.height}};"
+       src="{{h5url}}"
+       onpagestart="pagestart"
+       onpagefinish="pagefinish"
+       onerror="error"></origin-web>
+  </view>
+</template>
+
+<script>
+const webview = weex.requireModule('webview');
+import cml from 'chameleon-api'
+class ChartF2 implements ChartF2Interface {
+  props = {
+    name: {
+      type: String,
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    size: {
+      type: Object,
+      default: () => {return {width: '100%', height: '400px'}}
+    },
+    canvasId: {
+      type: String,
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    chartDataId: {
+      type: String,
+      default: 'param1'
+    }
+  }
+   data= {
+    h5url: "",
+    // baseH5: "http://192.168.0.104:8000/weex/f2chartWeb",
+    baseH5: "http://10.8.10.131:8000/weex/f2chartWeb",
+    // h5url: "https://www.baidu.com"
+  }
+  created() {
+    this.size.height.indexOf('cpx') < 0 && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
+    this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
+    this.h5url = (this.baseH5 +  '?param=' + this.chartDataId + '&w=' + encodeURI(this.size.width) + '&h=' + encodeURI(this.size.height))
+  }
+  methods = {
+    reload (event) {
+      webview.reload(this.$refs.webview)
+    },
+    start (event) {
+    },
+    finish (event) {
+    },
+    error (event) {
+    }
+  }
+  mounted() {
+    this.$cmlEmit('onshow',{
+      value: this.name
+    })
+    setTimeout(() => {
+      this.reload();
+    },1000);
+  }
+}
+
+export default new ChartF2();
+</script>
+
+<style scoped>
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+    }
+  }
+}
+</script>

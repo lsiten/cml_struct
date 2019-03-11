@@ -1,0 +1,89 @@
+<template>
+  <view>
+    <chart options="{{ chartData }}"
+      ref="bar"
+      size = "{{ size }}"
+      theme="ovilia-green"/>
+  </view>
+</template>
+
+<script>
+import cml from 'chameleon-api'
+import getData from '../../units/echart-f2/chartData.js'
+class ChartF2 implements ChartF2Interface {
+  props = {
+    name: {
+      type: String,
+      default: '默认值'
+    },
+    size: {
+      type: Object,
+      default: () => {return {width: '100%', height: '400px'}}
+    },
+    canvasId: {
+      type: String,
+      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+    },
+    chartDataId: {
+      type: String,
+      default: 'params1'
+    }
+  }
+
+  data = {
+    chartData: {},
+    initOptions: {
+      renderer: 'canvas'
+    }
+  }
+
+  computed = {
+  }
+
+  watch = {
+  }
+  
+  methods = {
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+    // sizePx 单位统一为px
+    this.size.height.indexOf('cpx') > 0 &&  (this.size.height = cml.cpx2px(parseFloat(this.size.height)) + 'px')
+    this.size.width.indexOf('cpx') > 0 &&  (this.size.width = cml.cpx2px(parseFloat(this.size.width)) + 'px')
+    this.chartData = getData(this.chartDataId)
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+    this.$cmlEmit('onshow',{
+      value: this.name
+    })
+  }
+
+  beforeDestroy() {
+  }
+  
+  destroyed() {
+  }
+}
+
+export default new ChartF2();
+</script>
+
+<style >
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "chart": "./web/f2-echart"
+    }
+  }
+}
+</script>

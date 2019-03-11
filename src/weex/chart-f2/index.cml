@@ -1,0 +1,53 @@
+<template>
+  <view class="scroller-wrap" style="width: {{size.width}}; height: {{size.height}};">
+    <chart class="lsiten-echart"  size='{{sizePx}}' chartDataId='{{param}}'></chart>
+  </view>
+</template>
+
+<script>
+class Index  {
+  data = {
+    size: {
+      width: '100%',
+      height: '400px'
+    },
+    sizePx: {
+      width: '100%',
+      height: '400px'
+    },
+    param: 'param1'
+  }
+  beforeCreate(query) {
+    this.paramTeml = query.param || 'param1'
+    this.sizeTemp = {
+      width: query.w ? query.w : '100%',
+      height: query.h ? query.h : '600cpx'
+    }
+  }
+  created() {
+    this.size = JSON.parse(JSON.stringify(this.sizeTemp))
+    this.sizePx = JSON.parse(JSON.stringify(this.sizeTemp))
+    // size 单位统一为cpx
+    this.size.height.indexOf('cpx') < 0 && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
+    this.size.height.indexOf('cpx') < 0 && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
+    // sizePx 单位统一为px
+    this.sizePx.height.indexOf('cpx') > -1 &&  (this.sizePx.height = cml.cpx2px(parseFloat(this.sizePx.height)) + 'px')
+    this.sizePx.width.indexOf('cpx') > -1 &&  (this.sizePx.width = cml.cpx2px(parseFloat(this.sizePx.width)) + 'px')
+    this.param = this.paramTeml
+  }
+}
+
+export default new Index();
+
+</script>
+<style>
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {
+      "chart": "/components/chart-f2/chart-f2"
+    }
+  }
+}
+</script>

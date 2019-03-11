@@ -9,9 +9,20 @@
       "mock": "index.php"
     },
     {
+      "url": "/cml/h5/f2",
+      "path": "/pages/index/chart-f2",
+      "name": "F2表格",
+      "mock": "index.php"
+    },
+    {
       "url": "/weex/echartWeb",
       "path": "/weex/echart/index",
       "name": "echart-weex"
+    },
+    {
+      "url": "/weex/f2chartWeb",
+      "path": "/weex/chart-f2/index",
+      "name": "f2chart-weex"
     }
   ]
 }
