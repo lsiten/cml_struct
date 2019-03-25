@@ -1,13 +1,13 @@
 const renderChartTools = {
   // 渲染图标，柱状图
-  renderBarByType(x_data, y_data, color) {
+  renderBarByType(x_data, y_data, color, chart) {
     chart.interval().position(x_data + '*' + y_data).color([color])
   },
   // 渲染图标，折线图
-  renderLineByType(x_data, y_data, color) {
+  renderLineByType(x_data, y_data, color, chart) {
     chart.line({connectNulls: true}).position(x_data + '*' + y_data).color([color]).shape('smooth')
   },
-  generateLengend(name, lengendItems, lengendStyle, lengendcallback) {
+  generateLengend(name, lengendItems, lengendStyle, lengendcallback, chart) {
     if (lengendcallback && typeof lengendcallback === 'function') {
       lengendcallback()
     } else {
@@ -18,7 +18,7 @@ const renderChartTools = {
       chart.legend(lengendStyleFinish)
     }
   },
-  generateTooltip(tooltipcallback) {
+  generateTooltip(tooltipcallback, chart) {
     if (tooltipcallback && typeof tooltipcallback === 'function') {
       tooltipcallback()
     } else {
@@ -48,6 +48,29 @@ const renderChartTools = {
         }
       });
     }
+  },
+  // 平移
+  translation(x_data, data, entity, chart) {
+    if (entity.translation) {
+      chart.interaction('pan', {
+        speed:1,
+        step: 5,
+      });
+      // 定义进度条
+      chart.scrollBar(entity.translation.scrollBar || {
+        mode: 'x',
+        xStyle: {
+          backgroundColor: '#e8e8e8',
+          offsetY: -5
+        }
+      });
+    }
+  },
+  showInner(options, total) {
+    chart.guide().html({
+      position: options.guidePosition || ['50%', '48%'],
+      html: options.innerHtml ? options.innerHtml : '<div style="width: 250px;height: 40px;text-align: center;">' + '<div style="font-size: 1em">总资产<span style="font-size:0.8em">(' + options.unit + ')</span></div>' + '<div style="font-size: 1.8em;color:#6f77c9">' + total + '</div>' + '</div>'
+    })
   },
   findLegendItem(name, legendItems) {
     var index = void 0;

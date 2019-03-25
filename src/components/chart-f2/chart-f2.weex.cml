@@ -29,13 +29,13 @@ class ChartF2 implements ChartF2Interface {
     },
     chartDataId: {
       type: String,
-      default: 'param1'
+      default: 'params0'
     }
   }
    data= {
     h5url: "",
     // baseH5: "http://192.168.0.104:8000/weex/f2chartWeb",
-    baseH5: "http://10.8.10.131:8000/weex/f2chartWeb",
+    baseH5: "http://10.8.17.84:8000/weex/f2chartWeb",
     // h5url: "https://www.baidu.com"
   }
   created() {

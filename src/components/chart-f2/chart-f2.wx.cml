@@ -1,120 +1,235 @@
 <template>
   <view class="container">
     <f2canvas
-    class="lsiten-echart"
-    style="width: {{size.width}}; height: {{size.height}};"
-    id="{{ canvasId }}"
-    canvas-id="{{ canvasId }}"
-    opts="{{ opts }}"></f2canvas>
+      class="lsiten-echart"
+      style="width: {{size.width}}; height: {{size.height}};"
+      id="{{ canvasId }}"
+      canvas-id="{{ canvasId }}"
+      opts="{{ opts }}"></f2canvas>
   </view>
 </template>
 
 <script>
-import getData from '../../units/echart-f2/chartData.js'
-import F2 from './f2-canvas/lib/f2';
-import cml from 'chameleon-api'
-let chart = null
-class ChartF2 implements ChartF2Interface {
-  props = {
-    name: {
-      type: String,
-      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
-    },
-    size: {
-      type: Object,
-      default: () => {return {width: '100%', height: '400px'}}
-    },
-    canvasId: {
-      type: String,
-      default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
-    },
-    chartDataId: {
-      type: String,
-      default: 'params1'
+  import getData from '../../units/echart-f2/chartData.js'
+  import F2 from './f2-canvas/lib/f2';
+  import cml from 'chameleon-api';
+  import renderChartTools from './wxRenderChart';
+  import _ from 'lodash';
+  import {sumAll, uniq} from '../../units/common'
+
+  let chart = null
+
+  class ChartF2 implements ChartF2Interface {
+    props = {
+      name: {
+        type: String,
+        default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+      },
+      size: {
+        type: Object,
+        default: () => {
+          return {width: '100%', height: '400px'}
+        }
+      },
+      canvasId: {
+        type: String,
+        default: 'lsiten_echart_' + ('' + Math.random()).replace('.', '_')
+      },
+      chartDataId: {
+        type: String,
+        default: 'barLine'
+      },
+      chartType: {
+        type: String,
+        default: 'bar'
+      }
     }
-  }
-
-  data = {
-    opts: {
-      lazyLoad: true
+    data = {
+      chartTypeRends: {
+        bar: renderChartTools.renderBarByType,
+        line: renderChartTools.renderLineByType
+      },
+      markerTypsMap: {
+        bar: 'square',
+        line: 'circle'
+      },
+      chartData: {},
+      initOptions: {
+        renderer: 'canvas'
+      },
+      opts: {
+        lazyLoad: true
+      }
     }
-  }
-  computed = {
-  }
+    computed = {}
 
-  watch = {
-  }
+    watch = {}
 
-  methods = {
-    initChart () {
-      this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
-        this.initChartData(canvas, width, height)
+    methods = {
+      initChart() {
+        this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
+          this.initChartData(canvas, width, height)
+        })
+      },
+      async initChartData(canvas, width, height) {
+        try {
+          chart = chart ? chart : new F2.Chart({
+            el: canvas,
+            width,
+            height
+          })
+          let opts = await getData(this.chartDataId)
+          console.log(opts)
+          let entity = opts.options
+          let x_data = 'x_key'
+          let x_key_arr = []
+          opts.data.map(item => {
+            x_key_arr.push(item[x_data])
+          })
+          opts.dataSoureCfg[x_data].type = 'linear'
+          console.log(opts)
+          // opts.dataSoureCfg[x_data].values = x_key_arr.slice(0, 5) // (entity.translation.minIndex, entity.translation.maxIndex)
+          opts.dataSoureCfg[x_data].min = x_key_arr[entity.translation.minIndex]
+          opts.dataSoureCfg[x_data].max = x_key_arr[entity.translation.maxIndex]//现在取的是x轴的数字
+          chart.source(opts.data || [], opts.dataSoureCfg)
+
+          let y_data = ''
+          let lengendItems = []
+          if (entity.optionArr) {
+            entity.optionArr.map(item => {
+              this.chartTypeRends[item.type || 'bar'](x_data, item.y_data, item.color, chart)
+              lengendItems.push({
+                name: item.name,
+                marker: {
+                  symbol: this.markerTypsMap[item.type],
+                  fill: item.color,
+                  radius: 4
+                }
+              })
+            })
+            renderChartTools.translation(x_data, opts.data, entity || false, chart)
+            renderChartTools.generateLengend(entity.lengendName || 'name', lengendItems, entity.lengendStyle || {}, entity.lengendcallback || false, chart)
+            renderChartTools.generateTooltip(entity.tooltipcallback || false, chart)
+          } else {
+            if (entity.optionObj) {
+              this.chartTypeRends[entity.optionObj.type || 'bar'](x_data, entity.optionObj.y_data, entity.optionObj.color, chart)
+              renderChartTools.generateTooltip(entity.tooltipcallback || false, chart)
+            } else {
+              this.chartTypeRends.bar(x_data, y_data, false, false, false, chart)
+            }
+          }
+          chart.interaction('pan')
+          chart.render()
+
+        } catch (err) {
+          console.log(err)
+        }
+      },
+      /*环图 */
+      async polarChart() {
+        try {
+          let opts = await getData(this.options)
+          let optionsConfig = opts.options
+          chart = new F2.Chart({
+            el: this.$refs[this.name],
+            pixelRatio: window.devicePixelRatio, // 指定分辨率
+            padding: optionsConfig.padding || ['auto']
+          })
+          chart.source(opts.data || [])
+          let x_data = 'nameKey'
+          let y_data = 'valueKey'
+          let str_key = 'strKey'
+          let total = sumAll(opts.data, 'y_data')
+          chart.coord('polar', _.assign({}, {
+            transposed: true,
+            innerRadius: 0.6,
+            radius: 0.7
+          }, (optionsConfig.coord || {})));
+          chart.legend(_.assign({}, {
+            position: 'bottom',
+            align: 'center',
+            triggerOn: 'click'
+          }, (optionsConfig.legendConfig || {})));
+          chart.axis(false)
+          chart.tooltip(false)
+          chart.interval().position(str_key + '*' + y_data).color(x_data, optionsConfig.colorArr ? optionsConfig.colorArr : ['#FF9990', '#FFD893', '#66D6D5', '#7DC5FF', '#AC90DD', '#70AD47', '#81c784', '#ffe0b2', '#f48fb1', '#42a5f5']).adjust('stack')
+          chart.pieLabel(optionsConfig.pieLabel ? optionsConfig.pieLabel : false)
+          optionsConfig.showInner ? renderChartTools.showInner(optionsConfig, total, chart) : {}
+          chart.render()
+        } catch (err) {
+          console.log(err)
+        }
+      }
+    }
+
+    beforeCreate() {
+    }
+
+    created() {
+      (this.size.height.indexOf('cpx') < 0 && this.size.height.indexOf('rpx') < 0) && this.size.height.indexOf('px') > -1 && (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
+      (this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('rpx') < 0) && this.size.width.indexOf('px') > -1 && (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
+    }
+
+    beforeMount() {
+    }
+
+    mounted() {
+      this.initChart()
+      this.$cmlEmit('onshow', {
+        value: this.name
       })
-    },
-    initChartData (canvas, width, height) {
-      chart = chart ? chart : new F2.Chart({
-                                            el: canvas,
-                                            width,
-                                            height
-                                          })
-      let opts = getData(this.chartDataId)
-      let genre = (opts.genre || 'genre')
-      let sold = (opts.sold || 'sold')
-      chart.source(opts.data)
-      chart.interval().position(genre + '*' + sold).color(genre);
-      chart.render()
+    }
+
+    beforeDestroy() {
+    }
+
+    destroyed() {
     }
   }
 
-  beforeCreate() {
-  }
-
-  created() {
-     (this.size.height.indexOf('cpx') < 0  && this.size.height.indexOf('rpx') < 0 ) && this.size.height.indexOf('px') > -1 &&  (this.size.height = cml.px2cpx(parseFloat(this.size.height)) + 'cpx')
-     (this.size.width.indexOf('cpx') < 0 && this.size.width.indexOf('rpx') < 0) && this.size.width.indexOf('px') > -1 &&  (this.size.width = cml.px2cpx(parseFloat(this.size.width)) + 'cpx')
-  }
-
-  beforeMount() {
-  }
-
-  mounted() {
-    this.initChart()
-    this.$cmlEmit('onshow',{
-      value: this.name
-    })
-  }
-
-  beforeDestroy() {
-  }
-
-  destroyed() {
-  }
-}
-
-export default new ChartF2();
+  export default new ChartF2();
 </script>
 
-<style >
-.lsiten-echart,
-.container{
-  width: 100%;
-}
+<style>
+  .lsiten-echart,
+  .container {
+    width: 100%;
+  }
 </style>
 
 <script cml-type="json">
-{
-  "base": {
-    "usingComponents": {
-      "f2canvas": "./f2-canvas/f2-canvas"
+  {
+    "base"
+  :
+    {
+      "usingComponents"
+    :
+      {
+        "f2canvas"
+      :
+        "./f2-canvas/f2-canvas"
+      }
     }
-  },
-  "wx": {
-    "window": {
-      "backgroundTextStyle": "dark",
-      "navigationBarBackgroundColor": "#343434",
-      "navigationBarTitleText": "CNODE",
-      "navigationBarTextStyle": "#fff"
+  ,
+    "wx"
+  :
+    {
+      "window"
+    :
+      {
+        "backgroundTextStyle"
+      :
+        "dark",
+          "navigationBarBackgroundColor"
+      :
+        "#343434",
+          "navigationBarTitleText"
+      :
+        "CNODE",
+          "navigationBarTextStyle"
+      :
+        "#fff"
+      }
     }
   }
-}
 </script>

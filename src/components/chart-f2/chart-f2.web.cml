@@ -1,6 +1,6 @@
 <template>
   <view>
-    <chart options="{{ chartData }}"
+    <chart options="{{ chartDataId }}"
       ref="bar"
       size = "{{ size }}"
       theme="ovilia-green"/>
@@ -9,7 +9,6 @@
 
 <script>
 import cml from 'chameleon-api'
-import getData from '../../units/echart-f2/chartData.js'
 class ChartF2 implements ChartF2Interface {
   props = {
     name: {
@@ -26,7 +25,11 @@ class ChartF2 implements ChartF2Interface {
     },
     chartDataId: {
       type: String,
-      default: 'params1'
+      default: 'barLine'
+    },
+    chartType:{
+      type: String,
+      default: 'bar'
     }
   }
 
@@ -53,7 +56,6 @@ class ChartF2 implements ChartF2Interface {
     // sizePx 单位统一为px
     this.size.height.indexOf('cpx') > 0 &&  (this.size.height = cml.cpx2px(parseFloat(this.size.height)) + 'px')
     this.size.width.indexOf('cpx') > 0 &&  (this.size.width = cml.cpx2px(parseFloat(this.size.width)) + 'px')
-    this.chartData = getData(this.chartDataId)
   }
 
   beforeMount() {
