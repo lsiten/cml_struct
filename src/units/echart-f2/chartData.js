@@ -2,6 +2,7 @@ import options from './params'
 
 export default async function getData(param) {
   let option = options[param]
+  console.log(param)
   let dataReturn = await (option.url ? getUrlData(option) : getStateData(option))
   let entity = {}
   let eData = []
@@ -44,8 +45,6 @@ let getUrlData = async (option) => {
 let getStateData = async (option) => {
   if (option.callback && typeof option.callback === 'function') {
     return option.callback()
-  }
-  if (option.url) {
   }
   let pieY = ('' + Math.random()).replace('.', '_')
   let dataPolar = [
@@ -178,6 +177,7 @@ let chartDataFormat0 = (entity) => {
           ent.x_key = sData[j][optionArr[i].x_data]
           ent[optionArr[i].y_data] = sData[j][optionArr[i].y_data]
           ent.name = name
+          ent.index = j
           arr.push(ent)
         }
       }
