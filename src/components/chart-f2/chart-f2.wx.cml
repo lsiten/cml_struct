@@ -79,7 +79,6 @@
             height
           })
           let opts = await getData(this.chartDataId)
-          console.log(opts)
           let entity = opts.options
           let x_data = 'x_key'
           let x_key_arr = []

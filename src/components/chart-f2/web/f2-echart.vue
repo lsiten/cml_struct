@@ -45,7 +45,7 @@
       }
     },
     mounted() {
-      this.polarChart()
+      this.barLineChart()
     },
     methods: {
       /*柱状图或折线图*/
