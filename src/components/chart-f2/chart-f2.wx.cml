@@ -11,7 +11,7 @@
 
 <script>
   import getData from '../../units/echart-f2/chartData.js'
-  import F2 from './f2-canvas/lib/f2';
+  import F2 from '@antv/f2/lib/index-all';
   import cml from 'chameleon-api';
   import renderChartTools from './wxRenderChart';
   import _ from 'lodash';
@@ -37,7 +37,7 @@
       },
       chartDataId: {
         type: String,
-        default: 'barLine'
+        default: 'polar'
       },
       chartType: {
         type: String,
@@ -68,7 +68,7 @@
     methods = {
       initChart() {
         this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
-          this.initChartData(canvas, width, height)
+          this.polarChart(canvas, width, height)
         })
       },
       async initChartData(canvas, width, height) {
@@ -78,7 +78,7 @@
             width,
             height
           })
-          let opts = await getData(this.chartDataId)
+
           console.log(opts)
           let entity = opts.options
           let x_data = 'x_key'
@@ -86,11 +86,11 @@
           opts.data.map(item => {
             x_key_arr.push(item[x_data])
           })
-          opts.dataSoureCfg[x_data].type = 'linear'
-          console.log(opts)
-          // opts.dataSoureCfg[x_data].values = x_key_arr.slice(0, 5) // (entity.translation.minIndex, entity.translation.maxIndex)
-          opts.dataSoureCfg[x_data].min = x_key_arr[entity.translation.minIndex]
-          opts.dataSoureCfg[x_data].max = x_key_arr[entity.translation.maxIndex]//现在取的是x轴的数字
+          opts.dataSoureCfg[x_data].type = 'cat'
+          console.log(x_key_arr)
+          opts.dataSoureCfg[x_data].values = x_key_arr.slice(entity.translation.minIndex, entity.translation.maxIndex) // (entity.translation.minIndex, entity.translation.maxIndex)
+          // opts.dataSoureCfg[x_data].min = entity.translation.minIndex
+          // opts.dataSoureCfg[x_data].max = entity.translation.maxIndex//现在取的是x轴的数字
           chart.source(opts.data || [], opts.dataSoureCfg)
 
           let y_data = ''
@@ -126,14 +126,14 @@
         }
       },
       /*环图 */
-      async polarChart() {
+      async polarChart(canvas, width, height) {
         try {
-          let opts = await getData(this.options)
+          let opts = await getData(this.chartDataId)
           let optionsConfig = opts.options
-          chart = new F2.Chart({
-            el: this.$refs[this.name],
-            pixelRatio: window.devicePixelRatio, // 指定分辨率
-            padding: optionsConfig.padding || ['auto']
+          chart = chart ? chart : new F2.Chart({
+            el: canvas,
+            width,
+            height
           })
           chart.source(opts.data || [])
           let x_data = 'nameKey'

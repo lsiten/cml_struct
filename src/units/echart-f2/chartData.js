@@ -2,6 +2,7 @@ import options from './params'
 
 export default async function getData(param) {
   let option = options[param]
+  console.log(param)
   let dataReturn = await (option.url ? getUrlData(option) : getStateData(option))
   let entity = {}
   let eData = []
@@ -45,8 +46,6 @@ let getStateData = async (option) => {
   if (option.callback && typeof option.callback === 'function') {
     return option.callback()
   }
-  if (option.url) {
-  }
   let pieY = ('' + Math.random()).replace('.', '_')
   let dataPolar = [
     {x_data: '芳华', y_data: 666},
@@ -56,7 +55,7 @@ let getStateData = async (option) => {
     {x_data: '寻梦环游记', y_data: 566},
     {x_data: '其他', y_data: 555}
   ];
-  let otherData = [
+  let otherData0 = [
     {x_data: 0, y_data: 666, y_data_1: 65},
     {x_data: 1, y_data: 666, y_data_1: 65},
     {x_data: 2, y_data: 888, y_data_1: 615},
@@ -77,7 +76,7 @@ let getStateData = async (option) => {
     {x_data: 17, y_data: 555, y_data_1: 666},
     {x_data: 18, y_data: 666, y_data_1: 65},
   ];
-  let otherData1 = [
+  let otherData = [
     {x_data: '芳华1', y_data: 666, y_data_1: 65},
     {x_data: '芳华2', y_data: 888, y_data_1: 615},
     {x_data: '芳华3', y_data: 999, y_data_1: 655},

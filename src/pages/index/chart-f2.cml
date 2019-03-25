@@ -13,7 +13,7 @@
 class Index  {
   data = {
     title: "chameleon",
-    chartData: 'barLine',
+    chartData: 'polar',
     size: {
       width: '100%',
       height: '800cpx'
