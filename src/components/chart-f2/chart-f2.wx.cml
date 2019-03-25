@@ -86,11 +86,14 @@
           opts.data.map(item => {
             x_key_arr.push(item[x_data])
           })
-          opts.dataSoureCfg[x_data].type = 'linear'
+          if (entity.x_Config.type === 'linear') {
+            opts.dataSoureCfg[x_data].min = x_key_arr[entity.translation.minIndex]
+            opts.dataSoureCfg[x_data].max = x_key_arr[entity.translation.maxIndex]
+          } else {
+            opts.dataSoureCfg[x_data].values = x_key_arr.slice(entity.translation.minIndex, entity.translation.maxIndex)
+          }
+
           console.log(opts)
-          // opts.dataSoureCfg[x_data].values = x_key_arr.slice(0, 5) // (entity.translation.minIndex, entity.translation.maxIndex)
-          opts.dataSoureCfg[x_data].min = x_key_arr[entity.translation.minIndex]
-          opts.dataSoureCfg[x_data].max = x_key_arr[entity.translation.maxIndex]//现在取的是x轴的数字
           chart.source(opts.data || [], opts.dataSoureCfg)
 
           let y_data = ''

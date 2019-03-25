@@ -40,6 +40,7 @@ export default {
       },
       x_Config: {
         type: 'cat',
+        range: [0, 1]
       },
       optionArr: [
         // {
