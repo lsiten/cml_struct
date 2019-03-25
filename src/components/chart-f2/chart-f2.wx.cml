@@ -37,7 +37,7 @@
       },
       chartDataId: {
         type: String,
-        default: 'polar'
+        default: 'barLine'
       },
       chartType: {
         type: String,
@@ -68,7 +68,7 @@
     methods = {
       initChart() {
         this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
-          this.polarChart(canvas, width, height)
+          this.initChartData(canvas, width, height)
         })
       },
       async initChartData(canvas, width, height) {
@@ -78,7 +78,7 @@
             width,
             height
           })
-
+          let opts = await getData(this.chartDataId)
           console.log(opts)
           let entity = opts.options
           let x_data = 'x_key'

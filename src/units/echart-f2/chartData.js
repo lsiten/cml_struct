@@ -177,6 +177,7 @@ let chartDataFormat0 = (entity) => {
           ent.x_key = sData[j][optionArr[i].x_data]
           ent[optionArr[i].y_data] = sData[j][optionArr[i].y_data]
           ent.name = name
+          ent.index = j
           arr.push(ent)
         }
       }
