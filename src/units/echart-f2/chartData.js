@@ -2,7 +2,6 @@ import options from './params'
 
 export default async function getData(param) {
   let option = options[param]
-  console.log(param)
   let dataReturn = await (option.url ? getUrlData(option) : getStateData(option))
   let entity = {}
   let eData = []
@@ -45,6 +44,8 @@ let getUrlData = async (option) => {
 let getStateData = async (option) => {
   if (option.callback && typeof option.callback === 'function') {
     return option.callback()
+  }
+  if (option.url) {
   }
   let pieY = ('' + Math.random()).replace('.', '_')
   let dataPolar = [
@@ -148,11 +149,11 @@ let findLegendItem = (name, legendItems) => {
 
 let chartDataFormat = (entity) => {
   let sData = entity.data ? entity.data : []
-  let arr = []
+  let arr = new Array()
   if (entity.optionArr) {
     let optionArr = entity.optionArr
     for (let i = 0; i < sData.length; i++) {
-      let ent ={}
+      let ent = new Object()
       ent['x_key'] = sData[i][optionArr[0].x_data]
       for (let j = 0; j < entity.optionArr.length; j++) {
         if (optionArr[j].x_data) {
@@ -177,7 +178,6 @@ let chartDataFormat0 = (entity) => {
           ent.x_key = sData[j][optionArr[i].x_data]
           ent[optionArr[i].y_data] = sData[j][optionArr[i].y_data]
           ent.name = name
-          ent.index = j
           arr.push(ent)
         }
       }

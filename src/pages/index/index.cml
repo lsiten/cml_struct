@@ -1,10 +1,12 @@
 <template>
-  <view class="page-container">
-    <view class="scroller-wrap">
-        <demo-com imageSrc="{{ chameleonSrc }}"></demo-com>
-        <echart class="lsiten-echart" name="hi0001" size="{{ size }}" chartDataId="{{ chartData }}"></echart>
-      </view>
-  </view>
+  <page title="chameleon">
+    <view class="page-container">
+      <view class="scroller-wrap">
+          <demo-com imageSrc="{{ chameleonSrc }}"></demo-com>
+          <echart class="lsiten-echart" name="hi0001" size="{{ size }}" chartDataId="{{ chartData }}"></echart>
+        </view>
+    </view>
+  </page>
 </template>
 
 <script>

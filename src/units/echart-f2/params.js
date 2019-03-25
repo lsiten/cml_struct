@@ -40,7 +40,6 @@ export default {
       },
       x_Config: {
         type: 'cat',
-        range: [0, 1]
       },
       optionArr: [
         // {
@@ -75,7 +74,6 @@ export default {
   * strKey:一个常量名
   * */
   polar: {
-    url: '',
     type: 'polar',
     padding: ['auto', 'auto', 50, 'auto'],
     showInner: false,
@@ -94,12 +92,6 @@ export default {
         console.log(data)
         return {text: '值：' + data.valueKey, fill: color}
         // {text: itemPercent(data.y_data, total), fill: color}
-      },
-      onClick: function onClick(ev) {
-        var data = ev.data;
-        if (data) {
-          console.log(ev)
-        }
       }
     },
     legendConfig: {

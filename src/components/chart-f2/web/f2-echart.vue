@@ -59,7 +59,7 @@
           })
           let entity = options.options
           let x_data = 'x_key'
-          let x_key_arr = []
+          let x_key_arr = new Array()
           options.data.map(item => {
             x_key_arr.push(item[x_data])
           })

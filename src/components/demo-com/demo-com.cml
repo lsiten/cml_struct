@@ -1,12 +1,12 @@
 <template>
   <view class="demo-com">
     <text class="title">{{title}}</text>
-    <image ref="" src="{{imageSrc}}" class="logo"></image>  
+    <image src="{{imageSrc}}" class="logo"></image>  
   </view>
 </template>
 
 <script>
-import cml from 'chameleon-api'
+
 class DemoCom {
   props = {
     title: {

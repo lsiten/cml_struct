@@ -11,7 +11,7 @@
 
 <script>
   import getData from '../../units/echart-f2/chartData.js'
-  import F2 from '@antv/f2/lib/index-all';
+  import F2 from './f2-canvas/lib/f2';
   import cml from 'chameleon-api';
   import renderChartTools from './wxRenderChart';
   import _ from 'lodash';
@@ -79,6 +79,7 @@
             height
           })
           let opts = await getData(this.chartDataId)
+          console.log(opts)
           let entity = opts.options
           let x_data = 'x_key'
           let x_key_arr = []
@@ -91,8 +92,6 @@
           } else {
             opts.dataSoureCfg[x_data].values = x_key_arr.slice(entity.translation.minIndex, entity.translation.maxIndex)
           }
-
-          console.log(opts)
           chart.source(opts.data || [], opts.dataSoureCfg)
 
           let y_data = ''
@@ -128,14 +127,14 @@
         }
       },
       /*环图 */
-      async polarChart(canvas, width, height) {
+      async polarChart() {
         try {
-          let opts = await getData(this.chartDataId)
+          let opts = await getData(this.options)
           let optionsConfig = opts.options
-          chart = chart ? chart : new F2.Chart({
-            el: canvas,
-            width,
-            height
+          chart = new F2.Chart({
+            el: this.$refs[this.name],
+            pixelRatio: window.devicePixelRatio, // 指定分辨率
+            padding: optionsConfig.padding || ['auto']
           })
           chart.source(opts.data || [])
           let x_data = 'nameKey'

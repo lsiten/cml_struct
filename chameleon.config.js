@@ -1,6 +1,6 @@
 
 // 设置静态资源的线上路径
-const publicPath = 'http://10.8.10.131:8080';
+const publicPath = '//www.static.chameleon.com/cml';
 // 设置api请求前缀
 const apiPrefix = 'https://api.chameleon.com';
 
@@ -19,7 +19,7 @@ cml.config.merge({
     }
   },
   check: {
-    enable: true,
+    enable: false,
     enableTypes: ["Object","Array","Nullable"]
   },
   web: {
@@ -28,7 +28,6 @@ cml.config.merge({
       console: false
     },
     build: {
-      hash: true,
       analysis: false,
       publicPath: `${publicPath}/web/`,
       apiPrefix
@@ -39,7 +38,6 @@ cml.config.merge({
       console: true
     },
     build: {
-      hash: true,
       publicPath: `${publicPath}/weex/`,
       apiPrefix
     },
