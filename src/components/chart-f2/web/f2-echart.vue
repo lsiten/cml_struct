@@ -63,7 +63,12 @@
           options.data.map(item => {
             x_key_arr.push(item[x_data])
           })
-          options.dataSoureCfg[x_data].values = x_key_arr.slice(entity.translation.minIndex, entity.translation.maxIndex)
+          if (entity.x_Config.type === 'linear') {
+            options.dataSoureCfg[x_data].min = x_key_arr[entity.translation.minIndex]
+            options.dataSoureCfg[x_data].max = x_key_arr[entity.translation.maxIndex]
+          } else {
+            options.dataSoureCfg[x_data].values = x_key_arr.slice(entity.translation.minIndex, entity.translation.maxIndex)
+          }
           this.chart.source(options.data || [], options.dataSoureCfg)
 
           let y_data = ''
