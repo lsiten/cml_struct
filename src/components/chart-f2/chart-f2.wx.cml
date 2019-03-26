@@ -71,7 +71,7 @@
     methods = {
       initChart() {
         this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
-          this.initChartData(canvas, width, height)
+          this.chartDataId.indexOf('polar') > -1 ? this.polarChart(canvas, width, height) : this.initChartData(canvas, width, height)
         })
       },
       async initChartData(canvas, width, height) {
@@ -82,7 +82,7 @@
             height
           })
           let opts = await getData(this.chartDataId)
-          console.log(opts)
+          //console.log(opts)
           let entity = opts.options
           let x_data = 'x_key'
           let x_key_arr = []
@@ -124,20 +124,19 @@
           }
           // chart.interaction('pan')
           chart.render()
-
         } catch (err) {
           console.log(err)
         }
       },
       /*环图 */
-      async polarChart() {
+      async polarChart(canvas, width, height) {
         try {
-          let opts = await getData(this.options)
+          let opts = await getData(this.chartDataId)
           let optionsConfig = opts.options
           chart = new F2.Chart({
-            el: this.$refs[this.name],
-            pixelRatio: window.devicePixelRatio, // 指定分辨率
-            padding: optionsConfig.padding || ['auto']
+            el: canvas,
+            width,
+            height
           })
           chart.source(opts.data || [])
           let x_data = 'nameKey'
@@ -157,7 +156,7 @@
           chart.axis(false)
           chart.tooltip(false)
           chart.interval().position(str_key + '*' + y_data).color(x_data, optionsConfig.colorArr ? optionsConfig.colorArr : ['#FF9990', '#FFD893', '#66D6D5', '#7DC5FF', '#AC90DD', '#70AD47', '#81c784', '#ffe0b2', '#f48fb1', '#42a5f5']).adjust('stack')
-          chart.pieLabel(optionsConfig.pieLabel ? optionsConfig.pieLabel : false)
+          optionsConfig.pieLabel && chart.pieLabel(optionsConfig.pieLabel)
           optionsConfig.showInner ? renderChartTools.showInner(optionsConfig, total, chart) : {}
           chart.render()
         } catch (err) {
