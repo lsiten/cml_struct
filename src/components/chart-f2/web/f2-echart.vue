@@ -45,14 +45,13 @@
       }
     },
     mounted() {
-      this.barLineChart()
+      this.options === 'polar' ? this.polarChart() : this.barLineChart()
     },
     methods: {
       /*柱状图或折线图*/
       async barLineChart() {
         try {
           let options = await getData(this.options)
-
           this.chart = this.chart ? this.chart : new F2.Chart({
             el: this.$refs[this.name],
             pixelRatio: window.devicePixelRatio // 指定分辨率

@@ -11,7 +11,7 @@
 
 <script>
   import getData from '../../units/echart-f2/chartData.js'
-  import F2 from './f2-canvas/lib/f2';
+  import F2 from '@antv/f2/lib/index-all'
   import cml from 'chameleon-api';
   import renderChartTools from './wxRenderChart';
   import _ from 'lodash';
@@ -68,7 +68,7 @@
     methods = {
       initChart() {
         this.selectComponent('#' + this.canvasId).init((canvas, width, height) => {
-          this.initChartData(canvas, width, height)
+          this.chartDataId === 'polar' ? this.polarChart(canvas, width, height) : this.initChartData(canvas, width, height)
         })
       },
       async initChartData(canvas, width, height) {
@@ -79,7 +79,7 @@
             height
           })
           let opts = await getData(this.chartDataId)
-          console.log(opts)
+          //console.log(opts)
           let entity = opts.options
           let x_data = 'x_key'
           let x_key_arr = []
@@ -121,20 +121,19 @@
           }
           chart.interaction('pan')
           chart.render()
-
         } catch (err) {
           console.log(err)
         }
       },
       /*环图 */
-      async polarChart() {
+      async polarChart(canvas, width, height) {
         try {
-          let opts = await getData(this.options)
+          let opts = await getData(this.chartDataId)
           let optionsConfig = opts.options
           chart = new F2.Chart({
-            el: this.$refs[this.name],
-            pixelRatio: window.devicePixelRatio, // 指定分辨率
-            padding: optionsConfig.padding || ['auto']
+            el: canvas,
+            width,
+            height
           })
           chart.source(opts.data || [])
           let x_data = 'nameKey'
