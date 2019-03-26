@@ -10,8 +10,11 @@
 </template>
 
 <script>
+  const window = (function (){
+    return this
+  })();
   import getData from '../../units/echart-f2/chartData.js'
-  import F2 from './f2-canvas/lib/f2';
+  import F2 from './f2-canvas/lib/f2.js'
   import cml from 'chameleon-api';
   import renderChartTools from './wxRenderChart';
   import _ from 'lodash';
@@ -119,7 +122,7 @@
               this.chartTypeRends.bar(x_data, y_data, false, false, false, chart)
             }
           }
-          chart.interaction('pan')
+          // chart.interaction('pan')
           chart.render()
 
         } catch (err) {

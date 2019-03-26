@@ -38,8 +38,11 @@ export default {
         minIndex: 0,
         maxIndex: 5
       },
+      // translation: false,
       x_Config: {
         type: 'cat',
+        tickCount: 9,
+        isRounding: true
       },
       optionArr: [
         // {
