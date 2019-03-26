@@ -36,7 +36,9 @@ export default async function getData(param) {
   }
 }
 let getUrlData = async (option) => {
-
+  if (option.callback && typeof option.callback === 'function') {
+    return option.callback()
+  }
 }
 
 let getStateData = async (option) => {

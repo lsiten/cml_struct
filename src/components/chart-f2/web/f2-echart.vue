@@ -36,7 +36,9 @@
         chart: null,
         chartTypeRends: {
           bar: this.renderBarByType,
-          line: this.renderLineByType
+          line: this.renderLineByType,
+          point: this.renderPointByType,
+          pointLine: this.renderPointLineByType
         },
         markerTypsMap: {
           bar: 'square',
@@ -45,7 +47,7 @@
       }
     },
     mounted() {
-      this.options === 'polar' ? this.polarChart() : this.barLineChart()
+      this.options.indexOf('polar') !== -1 ? this.polarChart() : this.barLineChart()
     },
     methods: {
       /*柱状图或折线图*/
@@ -74,6 +76,7 @@
           let lengendItems = []
           if (entity.optionArr) {
             entity.optionArr.map(item => {
+              console.log(item)
               this.chartTypeRends[item.type || 'bar'](x_data, item.y_data, item.color)
               lengendItems.push({
                 name: item.name,
@@ -132,7 +135,7 @@
           this.chart.axis(false)
           this.chart.tooltip(false)
           this.chart.interval().position(str_key + '*' + y_data).color(x_data, optionsConfig.colorArr ? optionsConfig.colorArr : ['#FF9990', '#FFD893', '#66D6D5', '#7DC5FF', '#AC90DD', '#70AD47', '#81c784', '#ffe0b2', '#f48fb1', '#42a5f5']).adjust('stack')
-          this.chart.pieLabel(optionsConfig.pieLabel ? optionsConfig.pieLabel : false)
+          optionsConfig.pieLabel ? this.chart.pieLabel(optionsConfig.pieLabel) : {}
           optionsConfig.showInner ? this.showInner(optionsConfig, total) : {}
           this.chart.render()
         } catch (err) {
@@ -148,15 +151,17 @@
       // 平移
       translation(x_data, data, entity) {
         if (entity.translation) {
-          this.chart.interaction('pan', {
-            limitRange: {
-              [x_data]: {
-                min: data[entity.translation.minIndex][x_data],
-                max: data[entity.translation.maxIndex][x_data]
-              }
-            },
-            step: 5,
-          });
+          if (data.length) {
+            this.chart.interaction('pan', {
+              limitRange: {
+                [x_data]: {
+                  min: data[entity.translation.minIndex][x_data],
+                  max: data[entity.translation.maxIndex][x_data]
+                }
+              },
+              step: 5,
+            });
+          }
           // 定义进度条
           this.chart.scrollBar(entity.translation.scrollBar || {
             mode: 'x',
@@ -175,6 +180,19 @@
       // 渲染图标，折线图
       renderLineByType(x_data, y_data, color) {
         this.chart.line({connectNulls: true}).position(x_data + '*' + y_data).color([color]).shape('smooth')
+      },
+      //渲染图标，点图
+      renderPointByType(x_data, y_data, color) {
+        this.chart.point().position(x_data + '*' + y_data).color([color])
+      },
+      //渲染图标，点+线图
+      renderPointLineByType(x_data, y_data, color) {
+        console.log('1')
+        this.chart.line({connectNulls: true}).position(x_data + '*' + y_data).color([color]).shape('smooth')
+        this.chart.point().position(x_data + '*' + y_data).color([color]).style({
+          stroke: '#fff',
+          lineWidth: 1
+        })
       },
       generateLengend(name, lengendItems, lengendStyle, lengendcallback) {
         if (lengendcallback && typeof lengendcallback === 'function') {

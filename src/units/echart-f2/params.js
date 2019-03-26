@@ -1,3 +1,5 @@
+import templates from './templates'
+
 export default {
   /*
 * 折线/柱状图配置项：====微信小程序兼容问题：折线图平移时会出现数据混乱情况，所以小程序的线图不允许设置平移
@@ -12,6 +14,11 @@ export default {
 * chartOptions.x_Config：x轴参数配置，antv f2 的Scale参数
 * callback:数据返回时处理
 * */
+  line: templates.line,
+  bar: templates.bar,
+  point: templates.point,
+  pointLine: templates.pointLine,
+  polarRight: templates.polarRight,
   barLine: {
     url: '',
     type: '',
@@ -63,9 +70,7 @@ export default {
         }
       ]
     },
-    callback(res) {
-    
-    }
+    callback: false
   },
   /*
   * 环图配置项：
