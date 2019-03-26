@@ -15,8 +15,6 @@ export default async function getData(param) {
       data: eData,
       options: option || {}
     }
-  } else if (option.type === 'noChange') {
-  
   } else {
     entity = {
       data: dataReturn,

@@ -6,9 +6,14 @@ export default {
 * chartOptions:配置项
 * chartOptions.legendItems：图例配置项（柱状图和线图），同 antv f2图例配置
 * chartOptions.translation：平移配置项，false为不平移
-* chartOptions.optionArr:各数据的配置项,全部必填。其中，name：参数显示名称，x_data为x轴显示内容的参数名，y_data为y轴显示内容的参数名，type为显示图表类型（bar，line），color：报表颜色
+* chartOptions.optionArr:各数据的配置项,全部必填。
+* 其中，name：参数显示名称，x_data为x轴显示内容的参数名，y_data为y轴显示内容的参数名，type为显示图表类型（bar，line），color：报表颜色
+* chartOptions.translation:用于显示区间，在有滚动条时使用minIndex最小键值（整数）maxIndex：最大键值
+* chartOptions.x_Config：x轴参数配置，antv f2 的Scale参数
+* callback:数据返回时处理
 * */
   barLine: {
+    url: '',
     type: '',
     padding: ['auto'],
     chartOptions: {
@@ -42,13 +47,13 @@ export default {
         type: 'cat',
       },
       optionArr: [
-        // {
-        //   name: '金额',
-        //   x_data: 'x_data',
-        //   y_data: 'y_data',
-        //   type: 'bar',
-        //   color: '#66D6D5',
-        // },
+        {
+          name: '金额',
+          x_data: 'x_data',
+          y_data: 'y_data',
+          type: 'bar',
+          color: '#66D6D5',
+        },
         {
           name: '同比',
           x_data: 'x_data',
@@ -57,6 +62,9 @@ export default {
           color: '#AC90DD',
         }
       ]
+    },
+    callback(res) {
+    
     }
   },
   /*
@@ -71,9 +79,11 @@ export default {
   * pieLabel：饼图label配置，false为不显示
   * legendConfig：图例配置，false为不显示
   * coord：饼图坐标系配置
-  * strKey:一个常量名
+  * strKey:一个常量名，用于环图固定配置
+  * callback:数据返回时处理
   * */
   polar: {
+    url: '',
     type: 'polar',
     padding: ['auto', 'auto', 50, 'auto'],
     showInner: false,
@@ -103,6 +113,9 @@ export default {
       transposed: true,
       innerRadius: 0.6,
       radius: 0.7
+    },
+    callback(res) {
+    
     }
   },
   urlData0: {
@@ -111,6 +124,4 @@ export default {
     
     }
   }
-  
-  
 }
