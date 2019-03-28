@@ -1,8 +1,8 @@
-const GROUP_NAME = 'home';
-const redirect = require('../config/map.json');
-const config = require('../config/index');
-const CodeMap = require('../config/responseCode');
-const homeControllers = require('../controller/home');
+const GROUP_NAME = 'home'
+const redirect = require('../config/map.json')
+const config = require('../config/index')
+const CodeMap = require('../config/responseCode')
+const homeControllers = require('../controller/home')
 module.exports = [
   {
     method: 'post',
@@ -19,13 +19,19 @@ module.exports = [
       let data = JSON.parse(JSON.stringify(config.response))
       data.code = CodeMap.OK.code
       data.msg = CodeMap.OK.message
-
-      let body = homeControllers.test()
-      data.body = body
-
-      const response = reply.response(data);
-      response.type('text/plain');
-      response.header('content-type', 'application/json; charset=utf-8');
+      try {
+        let rData = await homeControllers.test()
+        data.body = rData.body
+        data.code =Number(rData.code)>=0 ? rData.code :  CodeMap.OK.code
+        data.msg = rData.msg || CodeMap.OK.message
+      } catch (e) {
+        data.body = {}
+        data.code =Number(e.errcode)>=0 ? e.errcode :  CodeMap.ERROR.code
+        data.msg = e.message || CodeMap.ERROR.message
+      }
+      const response = reply.response(data)
+      response.type('text/plain')
+      response.header('content-type', 'application/json; charset=utf-8')
       return response;
     }
   }

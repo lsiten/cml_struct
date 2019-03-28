@@ -1,6 +1,7 @@
 const Joi = require('Joi');
 const CodeMap = require('./responseCode');
 module.exports = {
+  urlPre: 'http://10.8.10.130:9009',
   connect: {
     port: 3000,
     host: '0.0.0.0',
@@ -17,8 +18,8 @@ module.exports = {
     }).unknown()
   },
   response: {
-    code: CodeMap.ERROR.code,
-    msg: CodeMap.ERROR.message,
+    code: CodeMap.OK.code,
+    msg: CodeMap.OK.message,
     body: {}
   }
 }
