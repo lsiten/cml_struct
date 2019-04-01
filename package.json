@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start:server": "node server/app.js",
-    "dev:server": "supervisor --watch ./server server/app.js"
+    "dev:server": "supervisor --watch ./server server/app.js",
+    "dev": "forever start -w ./router/index.js && cml dev"
   },
   "license": "MIT",
   "dependencies": {
@@ -24,6 +25,8 @@
   "devDependencies": {
     "hapi": "^18.1.0",
     "joi": "^14.3.1",
-    "vision": "^5.4.4"
+    "require-all": "^3.0.0",
+    "vision": "^5.4.4",
+    "watch": "^1.0.2"
   }
 }
