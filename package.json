@@ -7,7 +7,9 @@
   "scripts": {
     "start:server": "node server/app.js",
     "dev:server": "supervisor --watch ./server server/app.js",
-    "dev": "forever start -w ./router/index.js && cml dev"
+    "start": "npm run dev",
+    "dev": "forever start -w --watchDirectory ./router/ ./router/index.js && cml dev",
+    "stop": "forever stopall"
   },
   "license": "MIT",
   "dependencies": {

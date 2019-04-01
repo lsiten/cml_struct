@@ -29,7 +29,7 @@ for (var index in weexs) {
 
 templateJson.routes = routers
 
-fs.writeFile(path.join(path.resolve(__dirname, './src'), 'router.config.json'), JSON.stringify(templateJson, null, 2), {
+fs.writeFile(path.join(path.resolve(__dirname, '../src'), 'router.config.json'), JSON.stringify(templateJson, null, 2), {
     encoding: 'utf-8'
 }, (err) => {
   if(err) {

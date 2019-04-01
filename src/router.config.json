@@ -1,12 +1,12 @@
 {
   "mode": "history",
-  "test": "test",
+  "class": "",
   "domain": "https://www.chameleon.com",
   "routes": [
     {
       "url": "/cml/h5/f2",
       "path": "/pages/index/chart-f2",
-      "name": "F2表格",
+      "name": "F6表格",
       "mock": "index.php"
     },
     {
