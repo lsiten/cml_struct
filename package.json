@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@antv/f2": "^3.3.5",
+    "axios": "^0.18.0",
     "chameleon-api": "0.1.0",
     "chameleon-bridge": "0.1.0",
     "chameleon-runtime": "^0.0.9",
@@ -20,7 +21,8 @@
     "cml-ui": "0.0.6",
     "echarts": "^4.1.0",
     "inert": "^5.1.2",
-    "package": "^1.0.1"
+    "package": "^1.0.1",
+    "qs": "^6.7.0"
   },
   "devDependencies": {
     "hapi": "^18.1.0",
