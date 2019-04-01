@@ -1,0 +1,12 @@
+[
+  {
+    "url": "/weex/echartWeb",
+    "path": "/weex/echart/index",
+    "name": "echart-weex"
+  },
+  {
+    "url": "/weex/f2chartWeb",
+    "path": "/weex/chart-f2/index",
+    "name": "f2chart-weex"
+  }
+]

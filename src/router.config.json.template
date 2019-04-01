@@ -1,8 +1,7 @@
 {
   "mode": "history",
-  "test": "test",
   "domain": "https://www.chameleon.com",
-  "routes": [
+  "routes":[
     {
       "url": "/cml/h5/f2",
       "path": "/pages/index/chart-f2",
