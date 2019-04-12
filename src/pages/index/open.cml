@@ -1,0 +1,48 @@
+<template>
+  <page title="打开新页面">
+    <view class="page-container">
+        <button
+            type="blue"
+            text="打开新应用"
+            c-bind:onclick="testclick"
+        >  
+        </button>
+    </view>
+  </page>
+</template>
+
+<script>
+import lsitenUtils from '../../components/lsitenUtils/lsitenUtils.interface'
+
+class Index  {
+  data = {
+    url: 'http://10.8.10.131:8000/cml/h5/f2?wx_addr=http%3A%2F%2F10.8.10.131%3A8000%2Fweex%2Fcml_struct.js%3Ft%3D1555031018494&path=%2Fpages%2Findex%2Fchart-f2'
+  }
+  created() {
+  }
+  methods = {
+    testclick () {
+        lsitenUtils.open('http://www.baidu.com', 0)
+        // lsitenUtils.open(this.url, 1)
+        // lsitenUtils.open('/pages/index/chart-f2', 2)
+    }
+  }
+}
+
+export default new Index();
+
+</script>
+<style scoped>
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  },
+  "wx": {
+    "navigationBarTitleText": "index",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#E2E2E2"
+  }
+}
+</script>

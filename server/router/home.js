@@ -8,13 +8,23 @@ module.exports = [
     method: 'post',
     path: `/${GROUP_NAME}/addr`,
     handler: async (request, reply) => {
-      let url = redirect.web_url + '?wx_addr=' + encodeURIComponent(redirect.wx_url) + '&weex_path=' + encodeURIComponent(redirect.entry_path)
+      // let url = redirect.web_url + '?wx_addr=' + encodeURIComponent(redirect.wx_url) + '&weex_path=' + encodeURIComponent(redirect.entry_path)
+      let url = redirect.web_url + '?wx_addr=' + encodeURIComponent(redirect.wx_url) + '&path=' + encodeURIComponent(redirect.entry_path)
       return url
     }
   },
   {
     method: 'get',
     path: `/${GROUP_NAME}/addr`,
+    handler: async (request, reply) => {
+      // let url = redirect.web_url + '?wx_addr=' + encodeURIComponent(redirect.wx_url) + '&weex_path=' + encodeURIComponent(redirect.entry_path)
+      let url = redirect.web_url + '?wx_addr=' + encodeURIComponent(redirect.wx_url) + '&path=' + encodeURIComponent(redirect.entry_path)
+      return url
+    }
+  },
+  {
+    method: 'get',
+    path: `/${GROUP_NAME}/addr2`,
     handler: async (request, reply) => {
       let data = JSON.parse(JSON.stringify(config.response))
       data.code = CodeMap.OK.code

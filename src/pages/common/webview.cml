@@ -1,0 +1,33 @@
+<template>
+  <page title="webview">
+    <view class="page-container">
+    </view>
+  </page>
+</template>
+<script>
+class Index  {
+  data = {
+  }
+  created() {
+  }
+  methods = {
+  }
+}
+
+export default new Index();
+
+</script>
+<style scoped>
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  },
+  "wx": {
+    "navigationBarTitleText": "index",
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#E2E2E2"
+  }
+}
+</script>

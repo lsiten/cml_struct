@@ -11,6 +11,7 @@ cml.config.merge({
   buildInfo: {
     wxAppId: '123456'
   },
+  globalCheckWhiteList: ['canvas.js', /node_modules/, /f2-canvas/, /ec-canvas/],
   wx: {
     dev: {
     },

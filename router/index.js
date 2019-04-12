@@ -13,6 +13,10 @@ var weexs = requireAll({
   dirname: __dirname + '/modules/weex'
 })
 
+var commons = requireAll({
+  dirname: __dirname + '/modules/common'
+})
+
 for (var index in pages) {
   routers = [
     ...routers,
@@ -24,6 +28,13 @@ for (var index in weexs) {
   routers = [
     ...routers,
     ...weexs[index]
+  ]
+}
+
+for (var index in commons) {
+  routers = [
+    ...routers,
+    ...commons[index]
   ]
 }
 

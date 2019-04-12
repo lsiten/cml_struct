@@ -1,0 +1,124 @@
+<script cml-type="interface">
+
+interface LsitenUtilsInterface {
+  /** 
+   * function 根据不同type打开不同类型程序
+   * @params {String} H5的url页面，JSbundle地址，path
+   * @Params {String || Number} 0：H5页面 1：jsbundle 2: path
+  */
+  open(url: String, type: [String, Number]): voild;
+}
+
+</script>
+
+<script cml-type="web">
+import {parseUrl} from '../../units/common.js'
+import cml from 'chameleon-api'
+class Method implements LsitenUtilsInterface {
+  open(url, type) {
+    switch (parseInt(type)) {
+      case 0:
+        // 引入WebView
+        cml.navigateTo({
+          path: '/pages/common/webview',
+          query: {
+            url: url
+          }
+        })
+        break;
+      case 1:
+        let urlVar = parseUrl(url)
+        window.open((urlVar.host || window.location.origin) + urlVar.pathH5, 'top')
+        break;
+      case 2:
+        cml.navigateTo({
+          path: url
+        })
+        break;
+      default:
+        cml.navigateTo({
+          path: url
+        })
+        break;
+    }
+  }
+}
+
+export default new Method();
+</script>
+
+<script cml-type="weex">
+import cml from 'chameleon-api'
+class Method implements LsitenUtilsInterface {
+  open(url, type) {
+    switch (parseInt(type)) {
+      case 0:
+        // 引入WebView
+        cml.navigateTo({
+          path: '/pages/common/webview',
+          query: {
+            url: url
+          }
+        })
+        break;
+      case 1:
+        cml.open(url)
+        break;
+      case 2:
+        cml.navigateTo({
+          path: url
+        })
+        break;
+      default:
+        cml.navigateTo({
+          path: url
+        })
+        break;
+    }
+  }
+}
+
+export default new Method();
+</script>
+
+<script cml-type="wx">
+import {parseUrl} from '../../units/common.js'
+import cml from 'chameleon-api'
+class Method implements LsitenUtilsInterface {
+  open(url, type) {
+    switch (parseInt(type)) {
+      case 0:
+        // 引入WebView
+        cml.navigateTo({
+          path: '/pages/common/webview',
+          query: {
+            url: url
+          }
+        })
+        break;
+      case 1:
+        let urlVar = parseUrl(url)
+        cml.navigateTo({
+          path: urlVar.weixin_path || urlVar.path
+        })
+        break;
+      case 2:
+        cml.navigateTo({
+          path: url
+        })
+        break;
+      default:
+        cml.navigateTo({
+          path: url
+        })
+        break;
+    }
+  }
+}
+
+export default new Method();
+</script>
+
+
+
+

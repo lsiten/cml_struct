@@ -8,27 +8,29 @@
     "start:server": "node server/app.js",
     "dev:server": "supervisor --watch ./server server/app.js",
     "start": "npm run dev",
-    "dev": "forever start -w --watchDirectory ./router/ ./router/index.js && cml dev",
+    "dev": "forever stopall && forever start -w --watchDirectory ./router/ ./router/index.js && cml dev",
     "stop": "forever stopall"
   },
   "license": "MIT",
   "dependencies": {
     "@antv/f2": "^3.3.5",
     "axios": "^0.18.0",
-    "chameleon-api": "0.1.0",
-    "chameleon-bridge": "0.1.0",
-    "chameleon-runtime": "^0.0.9",
+    "chameleon-api": "^0.4.3",
+    "chameleon-bridge": "^0.1.2",
+    "chameleon-runtime": "^0.1.4",
     "chameleon-store": "0.0.3",
-    "chameleon-ui-builtin": "0.0.6",
-    "cml-ui": "0.0.6",
+    "chameleon-ui-builtin": "^0.2.0",
+    "cml-ui": "^0.1.7",
     "echarts": "^4.1.0",
     "inert": "^5.1.2",
     "package": "^1.0.1",
-    "qs": "^6.7.0"
+    "qs": "^6.7.0",
+    "url-parse": "^1.4.5"
   },
   "devDependencies": {
     "hapi": "^18.1.0",
     "joi": "^14.3.1",
+    "query-string": "^6.4.2",
     "require-all": "^3.0.0",
     "vision": "^5.4.4",
     "watch": "^1.0.2"

@@ -1,3 +1,6 @@
+import urlParseTool from 'url-parse'
+import qs from 'query-string'
+
 /*计算饼图内部的百分比
 * data:饼图数据源
 * keyName：饼图各个元素的名称的key
@@ -86,4 +89,34 @@ export function uniq(array) {
     }
   }
   return temp
+}
+
+/**
+ * function 解析url
+ * @param {string} url  url格式字符串
+ * author: lsiten
+ * date: 2019/4/12
+ */
+export function parseUrl (url) {
+  let result = urlParseTool(decodeURIComponent(url))
+  let query = queryString(result.query)
+  return {
+    host: result.origin,
+    pathH5: result.pathname,
+    path: query.path || '',
+    wx_addr: query.wx_addr || '',
+    weixin_path: query.weixin_path || '',
+    baidu_path: query.baidu_path || '',
+    alipay_path: query.alipay_path || ''
+  }
+}
+
+/**
+ * function 解析query string
+ * @param {string} string  query格式字符串
+ * author: lsiten
+ * date: 2019/4/12
+ */
+export function queryString (string) {
+  return qs.parse(string);
 }
