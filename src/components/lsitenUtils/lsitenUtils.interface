@@ -6,7 +6,7 @@ interface LsitenUtilsInterface {
    * @params {String} H5的url页面，JSbundle地址，path
    * @Params {String || Number} 0：H5页面 1：jsbundle 2: path
   */
-  open(url: String, type: [String, Number]): voild;
+  open(url: String, type: [String, Number]): void;
 }
 
 </script>

@@ -1,7 +1,6 @@
 <template>
-  <page title="webview">
-    <view class="page-container">
-    </view>
+  <page title="webview" style="width: 100%; height: 100%;">
+    <webview name="my_webview" url="{{url}}"></webview>
   </page>
 </template>
 <script>
@@ -9,6 +8,10 @@ class Index  {
   data = {
   }
   created() {
+    this.url=this.paramUrl
+  }
+  beforeCreate(query) {
+    this.paramUrl = query.url
   }
   methods = {
   }
@@ -22,7 +25,9 @@ export default new Index();
 <script cml-type="json">
 {
   "base": {
-    "usingComponents": {}
+    "usingComponents": {
+    "webview":"/components/w-webview/w-webview"
+  }
   },
   "wx": {
     "navigationBarTitleText": "index",

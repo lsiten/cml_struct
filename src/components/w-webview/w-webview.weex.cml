@@ -1,0 +1,59 @@
+<template>
+  <view>
+    <origin-web
+      ref="webview"
+      style="width: 100%; height: 100%;"
+      src="{{url}}"
+      onpagestart="start"
+      onpagefinish="finish"
+      onerror="error"></origin-web>
+  </view>
+</template>
+
+<script>
+  const webview = weex.requireModule('webview');
+  import cml from 'chameleon-api'
+class WWebview implements WWebviewInterface {
+  props = {
+    name: {
+      type: String,
+      default: '默认值'
+    },
+    url: {
+      type: String,
+      default: 'https://www.baidu.com'
+    }
+  }
+
+  mounted() {
+    this.$cmlEmit('onshow', {
+      value: this.name
+    })
+  }
+  methods = {
+    reload() {
+      webview.reload(this.$refs.webview)
+    },
+    start(event) {
+    },
+    finish(event) {
+    },
+    error(event) {
+    }
+  }
+}
+
+export default new WWebview();
+</script>
+
+<style >
+
+</style>
+
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  }
+}
+</script>
