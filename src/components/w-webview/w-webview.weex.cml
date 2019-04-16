@@ -1,19 +1,23 @@
 <template>
-  <view>
+  <view style="width: 100%; height: 100%;">
     <origin-web
       ref="webview"
-      style="width: 100%; height: 100%;"
+      style="width: 100%; height: {{vHeight}};"
       src="{{url}}"
       onpagestart="start"
       onpagefinish="finish"
       onerror="error"></origin-web>
+      <text>{{url}}</text>
   </view>
 </template>
 
 <script>
-  const webview = weex.requireModule('webview');
-  import cml from 'chameleon-api'
+const webview = weex.requireModule('webview');
+import cml from 'chameleon-api'
 class WWebview implements WWebviewInterface {
+  data = {
+    vHeight: '0cpx'
+  }
   props = {
     name: {
       type: String,
@@ -21,14 +25,19 @@ class WWebview implements WWebviewInterface {
     },
     url: {
       type: String,
-      default: 'https://www.baidu.com'
+      default: 'http://10.8.10.131:8080/#/dashboard'
     }
   }
-
+  created () {
+    cml.getSystemInfo().then(info => {
+      this.vHeight = (info.viewportHeight - 88) + 'cpx'
+    })
+  }
   mounted() {
     this.$cmlEmit('onshow', {
       value: this.name
     })
+    this.reload()
   }
   methods = {
     reload() {

@@ -22,7 +22,7 @@ class Index  {
   }
   methods = {
     testclick () {
-        lsitenUtils.open('~www.baidu.com', 0)
+        lsitenUtils.open('http://10.8.10.131:8080/#/dashboard', 0)
         // lsitenUtils.open(this.url, 1)
         // lsitenUtils.open('/pages/index/chart-f2', 2)
     }

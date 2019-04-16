@@ -4,16 +4,22 @@
   </page>
 </template>
 <script>
+import cml from 'chameleon-api'
+let preUrl = ''
 class Index  {
   data = {
     name:'my_webview',
     url:''
   }
-  created(query) {
-    this.url = query.url.indexOf('~') !== -1 ? 'https://' + query.url.replace("~","") : query.url.replace("~","")
-    console.log('before:'+this.url)
+  created() {
+    // cml.alert({
+    //   message: preUrl ,
+    //   confirmTitle: 'ok'
+    // })
+    this.url = preUrl
   }
-  beforeCreate() {
+  beforeCreate(query) {
+    preUrl = query.url ? (query.url.indexOf('~') !== -1 ? 'https://' + query.url.replace('~', '') : query.url.replace('~', '')) : ''
   }
   methods = {
   }
