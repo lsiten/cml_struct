@@ -17,6 +17,6 @@ type EventDetail = {
 interface WWebviewInterface {
   name: String,
   url: String,
-  onshow(eventDetail: EventDetail): void;
+  onshow(eventDetail: EventDetail): void
 }
 </script>

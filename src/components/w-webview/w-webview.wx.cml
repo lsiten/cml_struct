@@ -1,55 +1,74 @@
 <template>
-  <view>
-    <text>wx端自定义组件</text>
-    <text>props:{{name}}</text>
+  <view style="height: 100%;width: 100%">
+    <web-view src="{{url}}" name="{{name}}"></web-view>
   </view>
 </template>
 
 <script>
+  class WWebview implements WWebviewInterface {
+    props = {
+      name: {
+        type: String,
+        default: '默认值'
+      },
+      url: {
+        type: String,
+        default: 'https://www.bing.com'
+      },
+    }
 
-class WWebview implements WWebviewInterface {
-  props = {
-    name: {
-      type: String,
-      default: '默认值'
+    data = {
+    }
+
+    computed = {}
+
+    watch = {}
+
+    methods = {
+      refreshWebview: function () {
+        setTimeout(() => {
+          let tmpUrl = this.url;
+          console.log('过了一秒后的wx_url:'+this.url_wx)
+          this.setData({
+            url: ''
+          });
+          this.setData({
+            url: tmpUrl
+          })
+        }, 1000);
+      }
+    }
+
+    beforeCreate() {
+      this.urlPage=this.url
+    }
+
+    created() {
+      this.url_wx=this.urlPage;
+      console.log('afterShowUrl:'+this.url)
+      console.log('afterShowName:'+this.name)
+      // this.refreshWebview()
+    }
+
+    beforeMount() {
+
+    }
+    
+    mounted() {
+      this.$cmlEmit('onshow', {
+        value: this.name,
+      })
+      console.log('afterMountedShowUrl:'+this.url)
+    }
+
+    beforeDestroy() {
+    }
+
+    destroyed() {
     }
   }
 
-  data = {
-  }
-
-  computed = {
-  }
-
-  watch = {
-  }
-
-  methods = {
-  }
-
-  beforeCreate() {
-  }
-
-  created() {
-  }
-
-  beforeMount() {
-  }
-
-  mounted() {
-    this.$cmlEmit('onshow',{
-      value: this.name
-    })
-  }
-
-  beforeDestroy() {
-  }
-
-  destroyed() {
-  }
-}
-
-export default new WWebview();
+  export default new WWebview();
 </script>
 
 <style >

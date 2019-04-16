@@ -1,24 +1,24 @@
 <template>
   <page title="webview" style="width: 100%; height: 100%;">
-    <webview name="my_webview" url="{{url}}"></webview>
+    <webview name="{{name}}"  url="{{url}}"></webview>
   </page>
 </template>
 <script>
 class Index  {
   data = {
+    name:'my_webview'
   }
-  created() {
-    this.url=this.paramUrl
+  created(query) {
+    this.url = query.url.indexOf('~') !== -1 ? 'https://' + query.url.replace("~","") : query.url.replace("~","")
+    // this.url=this.paramUrl
+    console.log('before:'+this.url)
   }
-  beforeCreate(query) {
-    this.paramUrl = query.url
+  beforeCreate() {
   }
   methods = {
   }
 }
-
 export default new Index();
-
 </script>
 <style scoped>
 </style>
