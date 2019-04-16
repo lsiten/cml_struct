@@ -25,29 +25,12 @@
     watch = {}
 
     methods = {
-      refreshWebview: function () {
-        setTimeout(() => {
-          let tmpUrl = this.url;
-          console.log('过了一秒后的wx_url:'+this.url_wx)
-          this.setData({
-            url: ''
-          });
-          this.setData({
-            url: tmpUrl
-          })
-        }, 1000);
-      }
     }
 
     beforeCreate() {
-      this.urlPage=this.url
     }
 
     created() {
-      this.url_wx=this.urlPage;
-      console.log('afterShowUrl:'+this.url)
-      console.log('afterShowName:'+this.name)
-      // this.refreshWebview()
     }
 
     beforeMount() {
@@ -58,8 +41,7 @@
       this.$cmlEmit('onshow', {
         value: this.name,
       })
-      console.log('afterMountedShowUrl:'+this.url)
-    }
+  }
 
     beforeDestroy() {
     }
