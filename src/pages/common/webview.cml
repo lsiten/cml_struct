@@ -6,7 +6,8 @@
 <script>
 class Index  {
   data = {
-    name:'my_webview'
+    name:'my_webview',
+    url:''
   }
   created(query) {
     this.url = query.url.indexOf('~') !== -1 ? 'https://' + query.url.replace("~","") : query.url.replace("~","")
