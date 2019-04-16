@@ -1,7 +1,5 @@
 <template>
-  <page title="webview" style="width: 100%; height: 100%;">
-    <webview name="{{name}}"  url="{{url}}"></webview>
-  </page>
+  <webview name="{{name}}" url="{{url}}"></webview>
 </template>
 <script>
 import cml from 'chameleon-api'
@@ -20,6 +18,8 @@ class Index  {
   }
   beforeCreate(query) {
     preUrl = query.url ? (query.url.indexOf('~') !== -1 ? 'https://' + query.url.replace('~', '') : query.url.replace('~', '')) : ''
+    preUrl=decodeURIComponent(preUrl)
+    console.log(preUrl)
   }
   methods = {
   }
@@ -33,6 +33,7 @@ export default new Index();
   "base": {
     "usingComponents": {
     "webview":"/components/w-webview/w-webview"
+
   }
   },
   "wx": {

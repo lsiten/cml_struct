@@ -1,0 +1,87 @@
+<template>
+  <view>
+    <view>
+      <text class="w-header-title" style="height:88cpx; width:100%; line-height:88cpx; text-align: center;font-size: 40cpx; background-color:{{bg_color}}; color:{{color}}">{{title}}</text>
+      <i class="w-header-icon"></i>
+    </view>
+    <slot>Content</slot>
+  </view>
+</template>
+<script>
+
+class WHeader {
+  props = {
+    title: {
+      type: String,
+      default: '默认值'
+    },
+    bg_color:{
+      type: String,
+      default: '#666666'
+    },
+    color:{
+      type: String,
+      default: '#fff'
+    }
+  }
+  data = {
+  }
+
+  computed = {
+  }
+
+  watch  = {
+  }
+
+  methods = {
+    closeX() {
+      cml.showToast({
+        message: '记得写关闭方法'
+      })
+    }
+  }
+
+  beforeCreate() {
+  }
+
+  created() {
+  }
+
+  beforeMount() {
+  }
+
+  mounted() {
+  }
+
+  beforeDestroy() {
+  }
+
+  destroyed() {
+  }
+}
+
+export default new WHeader();
+</script>
+<style>
+  .w-header-title{
+  }
+  .w-header-icon{
+    display: block;
+    background-image:url("../../assets/images/w-close.png");
+    background-position: 50% 50%;
+    background-size: 70% 70%;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 88cpx;
+    width: 88cpx;
+  }
+</style>
+<script cml-type="json">
+{
+  "base": {
+    "usingComponents": {}
+  }
+}
+</script>

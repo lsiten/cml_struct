@@ -1,7 +1,7 @@
 <template>
-  <view style="height: 100%;width: 100%">
+  <w_header title="{{name}}" style="width: 100%;height: 100%">
     <iframe frameborder="0" src="{{url}}" width="100%" height="100%" name="{{name}}"></iframe>
-  </view>
+  </w_header>
 </template>
 
 <script>
@@ -62,7 +62,9 @@ export default new WWebview();
 <script cml-type="json">
 {
   "base": {
-    "usingComponents": {}
+    "usingComponents": {
+    "w_header":"/components/w-header/w-header"
+  }
   }
 }
 </script>
