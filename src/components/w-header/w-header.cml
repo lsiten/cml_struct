@@ -2,7 +2,7 @@
   <view>
     <view>
       <text class="w-header-title" style="height:88cpx; width:100%; line-height:88cpx; text-align: center;font-size: 40cpx; background-color:{{bg_color}}; color:{{color}}">{{title}}</text>
-      <i class="w-header-icon"></i>
+      <w-icon name="&#xe6f7;" class="w-header-icon"></w-icon>
     </view>
     <slot>Content</slot>
   </view>
@@ -67,11 +67,10 @@ export default new WHeader();
   }
   .w-header-icon{
     display: block;
-    background-image:url("../../assets/images/w-close.png");
-    background-position: 50% 50%;
-    background-size: 70% 70%;
-    background-repeat: no-repeat;
     position: absolute;
+    font-size: 55cpx;
+    line-height: 88cpx;
+    color:#fff;
     top: 0;
     right: 0;
     height: 88cpx;
@@ -81,7 +80,9 @@ export default new WHeader();
 <script cml-type="json">
 {
   "base": {
-    "usingComponents": {}
+    "usingComponents": {
+    "w-icon":"/components/w-icon/w-icon"
+  }
   }
 }
 </script>
