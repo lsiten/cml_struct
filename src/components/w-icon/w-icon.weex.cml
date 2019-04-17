@@ -1,9 +1,9 @@
 <template>
-  <view class="iconfont">{{name}}</view>
+  <text class="iconfont" style="">{{name}}</text>
 </template>
 
 <script>
-
+const domModule = weex.requireModule('dom');
 class WIcon implements WIconInterface {
   props = {
     name: {
@@ -12,10 +12,10 @@ class WIcon implements WIconInterface {
     }
   }
   beforeCreate() {
-    const domModule = weex.requireModule('dom')
+    //目前支持ttf、woff文件，不支持svg、eot类型,moreItem at http://www.iconfont.cn/
     domModule.addRule('fontFace', {
       'fontFamily': "w_iconfont",
-      'src': "url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.ttf')"
+      'src': "url('https://at.alicdn.com/t/font_1145583_c4c58otbtyd.ttf')"
     });
   }
   created() {
@@ -33,11 +33,7 @@ export default new WIcon();
 
 <style >
   .iconfont{
-    font-family:"w_iconfont" !important;
-    font-size:16px;font-style:normal;
-    -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.2px;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: w_iconfont;
   }
 </style>
 

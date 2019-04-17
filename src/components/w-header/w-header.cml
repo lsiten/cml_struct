@@ -2,13 +2,13 @@
   <view>
     <view>
       <text class="w-header-title" style="height:88cpx; width:100%; line-height:88cpx; text-align: center;font-size: 40cpx; background-color:{{bg_color}}; color:{{color}}">{{title}}</text>
-      <w-icon name="&#xe6f7;" class="w-header-icon"></w-icon>
+      <view  c-bind:click="close_it" class="w-header-icon-out"><view class="w-header-icon-outer"><w-icon name="&#xe6f7;" class="w-header-icon"></w-icon></view></view>
     </view>
     <slot>Content</slot>
   </view>
 </template>
 <script>
-
+import cml from 'chameleon-api'
 class WHeader {
   props = {
     title: {
@@ -17,7 +17,7 @@ class WHeader {
     },
     bg_color:{
       type: String,
-      default: '#666666'
+      default: '#343434'
     },
     color:{
       type: String,
@@ -34,10 +34,8 @@ class WHeader {
   }
 
   methods = {
-    closeX() {
-      cml.showToast({
-        message: '记得写关闭方法'
-      })
+    close_it () {
+      cml.navigateBack(-1)
     }
   }
 
@@ -65,16 +63,29 @@ export default new WHeader();
 <style>
   .w-header-title{
   }
-  .w-header-icon{
+  .w-header-icon-out{
     display: block;
     position: absolute;
-    font-size: 55cpx;
-    line-height: 88cpx;
-    color:#fff;
     top: 0;
     right: 0;
     height: 88cpx;
-    width: 88cpx;
+    width: 128cpx;
+    padding: 15cpx;
+  }
+  .w-header-icon-outer{
+    border-radius: 40cpx;
+    border: 1cpx solid #4f4f4f;
+    width: 98cpx;
+    height: 58cpx;
+    padding: 0 25cpx;
+  }
+  .w-header-icon{
+    width: 58cpx;
+    height: 58cpx;
+    line-height: 58cpx;
+    font-size: 48cpx;
+    color:#fff;
+
   }
 </style>
 <script cml-type="json">
