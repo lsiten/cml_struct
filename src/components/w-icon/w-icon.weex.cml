@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import cml from 'chameleon-api'
 const domModule = weex.requireModule('dom');
 class WIcon implements WIconInterface {
   props = {
@@ -15,8 +16,12 @@ class WIcon implements WIconInterface {
     //目前支持ttf、woff文件，不支持svg、eot类型,moreItem at http://www.iconfont.cn/
     domModule.addRule('fontFace', {
       'fontFamily': "w_iconfont",
-      'src': "url('https://at.alicdn.com/t/font_1145583_c4c58otbtyd.ttf')"
+      'src': "url('https://at.alicdn.com/t/font_1145583_3p25fnexoz.ttf')"
     });
+    // cml.showToast({
+    //   message: 'Hello world!',
+    //   duration: 1000
+    // })
   }
   created() {
     
@@ -31,7 +36,7 @@ class WIcon implements WIconInterface {
 export default new WIcon();
 </script>
 
-<style >
+<style  scoped>
   .iconfont{
     font-family: w_iconfont;
   }

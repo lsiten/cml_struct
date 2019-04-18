@@ -52,12 +52,12 @@ export default new WIcon();
 <style >
   @font-face {
     font-family: 'w_iconfont';  /* project id 1145583 */
-    src: url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.eot');
-    src: url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.woff') format('woff'),
-    url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_1145583_c4c58otbtyd.svg#iconfont') format('svg');
+    src: url('//at.alicdn.com/t/font_1145583_3p25fnexoz.eot');
+    src: url('//at.alicdn.com/t/font_1145583_3p25fnexoz.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1145583_3p25fnexoz.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1145583_3p25fnexoz.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1145583_3p25fnexoz.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1145583_3p25fnexoz.svg#iconfont') format('svg');
   }
   .iconfont{
     font-family:"w_iconfont" !important;
