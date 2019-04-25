@@ -1,10 +1,11 @@
 <template>
-  <text class="iconfont" style="">{{name}}</text>
+  <text class="iconfont">{{getFontName}}</text>
 </template>
 
 <script>
 import cml from 'chameleon-api'
 const domModule = weex.requireModule('dom');
+const he = require('he');
 class WIcon implements WIconInterface {
   props = {
     name: {
@@ -18,17 +19,17 @@ class WIcon implements WIconInterface {
       'fontFamily': "w_iconfont",
       'src': "url('https://at.alicdn.com/t/font_1145583_3p25fnexoz.ttf')"
     });
-    // cml.showToast({
-    //   message: 'Hello world!',
-    //   duration: 1000
-    // })
+  }
+  computed = {
+    getFontName: function() {
+      return he.decode(this.name)
+    }
   }
   created() {
-    
   }
   mounted() {
     this.$cmlEmit('onshow',{
-      value: this.name
+      value: this.name.Replace
     })
   }
 }

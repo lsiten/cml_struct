@@ -10,6 +10,12 @@
       "mock": "index.php"
     },
     {
+      "url": "/cml/h5/open",
+      "path": "/pages/index/open",
+      "name": "开启新页面",
+      "mock": "index.php"
+    },
+    {
       "url": "/cml/h5/f2",
       "path": "/pages/index/chart-f2",
       "name": "F6表格",

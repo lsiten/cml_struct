@@ -1,5 +1,5 @@
-<template>
-  <view class="iconfont">{{name}}</view>
+<template lang='vue'>
+  <view class="iconfont" v-html="name"></view>
 </template>
 
 <script>

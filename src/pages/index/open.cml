@@ -8,345 +8,359 @@
 <!--        >-->
 <!--        </button>-->
 <!--    </view>-->
-    <view class="jw-my-app">
+    <view class="jw-my-app {{my_app_list.length>3?'jw-my-app-h410':''}} {{my_app_list.length-1>7?'jw-my-app-h560':''}}"><!-- class="{{my_app_list.list.length % 4===0?'jw-my-app'+Math.ceil(my_app_list.list.length / 4)+'-full':'jw-my-app'+Math.ceil(my_app_list.list.length / 4)+'-empty'}}"-->
       <text class="jw-title-name">我的应用</text>
-      <view>
-        <row justify="space-around" margin="{{30}}">
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <view>
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe603;"></w-icon>
-            </view>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">技术指标</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-        </row>
-        <row justify="space-around">
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">技术指标</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-        </row>
-        <row justify="space-around" margin="{{30}}">
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">我的好友</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-          <view class="jw-icon-relative">
-            <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-            <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-            <text class="jw-icon-text">技术指标</text>
-          </view>
-          </col>
-          <col height="{{130}}" width="{{150}}">
-          <view class="jw-icon-empty"></view>
-          </col>
-          <col height="{{130}}" width="{{150}}" background-color="#fff">
-          </col>
+      <view >
+        <row justify="start" margin="{{30}}" wrap="{{true}}">
+            <block  c-for="{{my_app_list}}" c-if="my_app_list.length&&(index < maxNum*1)" >
+              <view
+                class="js-drag {{item.id?'jw-icon-relative':'jw-icon-empty'}} {{openData && (openData.id === item.id)?'drag_move':''}}"
+                c-if="item&&item.id&&item.id&&(item.ifChoose==1)"
+                data-index="{{index}}"
+                c-key="item.id"
+                data-choose="{{item.ifChoose}}"
+                data-id="{{item.id}}"
+                c-bind:tap="del_add"
+                c-bind:touchstart="drag_event"
+                c-bind:touchmove="drag_event"
+                c-bind:touchend="drag_event"
+                style="{{item.transform}}"
+              >
+                <view>
+                  <w-icon class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}"
+                          name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
+                  <w-icon class="jw-icon-center jw-icon-blue" name="{{item.icon}}"></w-icon>
+                </view>
+                <text class="jw-icon-text">{{item.textName}}</text>
+              </view>
+              <view c-if="(!item.id)&&(openData!=-1)" class="jw-icon-empty jw-drag-get"></view>
+            </block>
+            <view class="jw-icon-empty" c-if="my_app_list.length<maxNum*1"></view>
+
+
         </row>
       </view>
     </view>
-    <c-tab tabs="{{tabs}}"
-           c-bind:tabclick="handleTabTap"
-           active-label="{{activeLabel}}"
-           inline="{{false}}"
-    >
-    </c-tab>
-    <scroller height="{{-1}}">
+    <scroller height="{{height_tag}}">
       <view class="jw-last-used">
-        <text class="jw-title-name">最近使用</text>
-        <view class="container">
-          <row justify="space-around" margin="{{30}}">
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <view>
-                <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe602;"></w-icon>
-                <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
+        <text class="jw-title-name">全部应用</text>
+        <view >
+          <row justify="start" margin="{{30}}" wrap="{{true}}">
+            <block  c-for="{{all_app_list.list}}" c-if="all_app_list.list.length" >
+              <view class="{{item.id?'jw-icon-relative':'jw-icon-empty'}}" c-if="item.id" data-id="{{item.id}}" data-choose="{{item.ifChoose}}" c-bind:tap="del_add" >
+                <view>
+                  <w-icon class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}" name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
+                  <w-icon class="jw-icon-center jw-icon-blue" name="{{item.icon}}"></w-icon>
+                </view>
+                <text class="jw-icon-text">{{item.textName}}</text>
               </view>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">技术指标</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-          </row>
-          <row justify="space-around" margin="{{30}}">
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <view>
-                <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe602;"></w-icon>
-                <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              </view>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">技术指标</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
+            </block>
           </row>
         </view>
       </view>
-      <view class="jw-last-used">
-        <text class="jw-title-name">最近使用</text>
-        <view class="container">
-          <row justify="space-around" margin="{{30}}">
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <view>
-                <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe602;"></w-icon>
-                <w-icon class="jw-icon-center jw-icon-blue" name="&#xe603;"></w-icon>
-              </view>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">技术指标</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-          </row>
-          <row justify="space-around" margin="{{30}}">
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <view>
-                <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe600;"></w-icon>
-                <w-icon class="jw-icon-center jw-icon-blue" name="&#xe603;"></w-icon>
-              </view>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">技术指标</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-          </row>
-        </view>
-      </view>
-      <view class="jw-last-used">
-        <text class="jw-title-name">最近使用</text>
-        <view class="container">
-          <row justify="space-around" margin="{{30}}">
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe602;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">技术指标</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe602;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top jw-icon-blue" name="&#xe602;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-          </row>
-          <row justify="space-around" margin="{{30}}">
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">技术指标</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-            <col height="{{130}}" width="{{150}}" background-color="#f2f2f2">
-            <view class="jw-icon-relative">
-              <w-icon class="jw-icon-right-top" name="&#xe600;"></w-icon>
-              <w-icon class="jw-icon-center jw-icon-blue" name="&#xe605;"></w-icon>
-              <text class="jw-icon-text">我的好友</text>
-            </view>
-            </col>
-          </row>
-        </view>
-      </view>
-
     </scroller>
   </page>
 </template>
 
 <script>
-import lsitenUtils from '../../components/lsitenUtils/lsitenUtils.interface'
 
+import lsitenUtils from '../../components/lsitenUtils/lsitenUtils.interface'
+import cml from 'chameleon-api'
+  let t = null
+  let curTime = 0
+  let clientX = 0
+  let clientY = 0
+let preX=null,preY=null
 class Index  {
   data = {
-    tabs:[{
-      label:'label1',
-      // prefixStyle:"width:50cpx;height:20cpx;background-color:red"
-    },{
-      label:"label2",
-      // suffixStyle:"width:50cpx;height:20cpx;background-color:red"
-    },{
-      label:'label3',
+    placeholderIndex: -1,
+    openData: null,
+    start_event:null,//被拖拽的对象
+    move_event:null,//目标对象
+    height_tag:-1,
+    maxNum:11,
+    my_app_list:[],
+    move_axis: [],
+    all_app_list:{
+      maxNum:11,
+      title:'全部应用',
+      list: [
+        {
+          id: 12,
+          textName: '我的资讯',
+          icon: '&#xe605;',
+          src: 'www.baidu.com',
+          ifChoose: 1,
+        }, {
+          id: 13,
+          textName: '我的资讯',
+          icon: '&#xe605;',
+          src: 'www.baidu.com',
+          ifChoose: 0,
+        }, {
+          id: 14,
+          textName: '我的资讯',
+          icon: '&#xe605;',
+          src: 'www.baidu.com',
+          ifChoose: 0,
+        }, {
+          id: 15,
+          textName: '我的好友',
+          icon: '&#xe604;',
+          ifChoose: 1,
+          src: 'www.bing.com'
+        }, {
+          id: 16,
+          textName: '我的图标',
+          icon: '&#xe603;',
+          ifChoose: 1,
+          src: 'www.iconfont.com'
+        }, {
+          id: 25,
+          textName: '我的美人',
+          icon: '&#xe605;',
+          src: 'www.baidu.com',
+          ifChoose: 1,
+        }, {
+          id: 26,
+          textName: '我的好人',
+          icon: '&#xe604;',
+          ifChoose: 0,
+          src: 'www.bing.com'
+        }, {
+          id: 27,
+          textName: '我的猪蹄',
+          icon: '&#xe603;',
+          ifChoose: 1,
+          src: 'www.iconfont.com'
+        }, {
+          id: 51,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 1,
+          src: 'www.iconfont.com'
+        }, {
+          id: 52,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 53,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 54,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 55,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 56,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 57,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 58,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 59,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 60,
+          textName: '我的猪蹄子',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }, {
+          id: 61,
+          textName: '我的猪大蹄',
+          icon: '&#xe603;',
+          ifChoose: 0,
+          src: 'www.iconfont.com'
+        }
+      ]
+    },
+    tabs:[
+      {
+        label: 'label1',
+        // prefixStyle:"width:50cpx;height:20cpx;background-color:red"
+      }, {
+        label: "label2",
+        // suffixStyle:"width:50cpx;height:20cpx;background-color:red"
+      }, {
+        label: 'label3',
 
-    },{
-      label:'label4',
-      // labelStyle:"color:green"
+      }, {
+        label: 'label4',
+        // labelStyle:"color:green"
 
-    },{
-      label:'label5',
-      // labelStyle:"color:green"
+      }, {
+        label: 'label5',
+        // labelStyle:"color:green"
 
-    },{
-      label:'label6',
-      // labelStyle:"color:green"
+      }, {
+        label: 'label6',
+        // labelStyle:"color:green"
 
-    }],
+      }
+    ],
     activeLabel:'label3',
     url: 'http://10.8.10.131:8000/cml/h5/f2?wx_addr=http%3A%2F%2F10.8.10.131%3A8000%2Fweex%2Fcml_struct.js%3Ft%3D1555031018494&path=%2Fpages%2Findex%2Fchart-f2'
   }
+  beforeCreate(){
+
+  }
+  mounted () {
+  }
   created() {
+    let my_arr = []
+    //const px = cml.cpx2px(100);
+    for (let i in this.all_app_list.list) {
+      if(this.all_app_list.list[i].ifChoose*1 === 1){
+        my_arr.push(JSON.parse(JSON.stringify(this.all_app_list.list[i])))
+      }
+    }
+    this.get_list(my_arr)
+
   }
   methods = {
     handleTabTap(e){
-      console.log(e);
       this.activeLabel = e.detail.label;
+    },
+    get_list(my_arr){
+      let mar=cml.cpx2px(22)
+      let h = cml.cpx2px(130)
+      let w = cml.cpx2px(160)
+      for(let j in my_arr){
+        let m=j>3?j%4:j
+        let n=parseInt(j/4)
+        let cX=(mar*(m*1+1))*1+(w*(m*1+0.5))*1
+        let cY=(mar*(n*1+1))*1+(h*(n*1+0.5))*1
+        my_arr[j].cX=cX
+        my_arr[j].cY=cY
+        my_arr[j].x=0
+        my_arr[j].y=0
+        my_arr[j].transform ='left:0;top:0'
+      }
+      this.my_app_list = my_arr
+      console.log(this.my_app_list)
+    },
+    get_axis(data){
+      let array=[]
+      for(let i in data){
+        let entity={
+          x:data[i].cX,
+          y:data[i].cY
+        }
+        array.push(entity)
+      }
+      return array
+    },
+    drag_event(e) {
+      let empty_tag={}
+      let axisArr=[]
+      if (e.type == 'touchstart') {
+        let index = e.currentTarget.dataset.index * 1
+        this.copy = this.my_app_list[index]
+        this.openData = this.my_app_list[index]
+        // 获取所有item坐标
+        this.move_axis =this.get_axis(this.my_app_list)
+        // 在item前插入占位符
+        this.my_app_list.splice(index, 0, empty_tag)
+        this.placeholderIndex = index
+
+        // 初始化当前view位置
+        const cX = e.changedTouches[0].clientX
+        const cY = e.changedTouches[0].clientY
+        this.openData.transform = 'left:' + cX + 'cpx;top:' + cY + 'cpx'
+      } else if (e.type == 'touchmove') {
+        if (!this.openData) return
+        let r = this.placeholderIndex
+        // 目标item移动
+        const cX = e.changedTouches[0].clientX
+        const cY = e.changedTouches[0].clientY
+        this.openData.transform = 'left:' + cX + 'cpx;top:' + cY + 'cpx'
+        //  对比坐标，查看当前移动的位置
+        let h = cml.cpx2px(130)
+        let w = cml.cpx2px(160)
+
+        this.move_axis.map((item, index) => {
+          if (cY >= item.y*2 - h && cY <= item.y*2 + h && cX > item.x*2 - w && cX <= item.x*2) {
+            r = index
+          }
+        })
+
+        // 将占位符移动到当前位
+        console.log(r+"_"+this.placeholderIndex)
+        if (this.placeholderIndex !== r) {
+          if(!this.my_app_list[this.placeholderIndex].id){
+            this.my_app_list.splice(this.placeholderIndex, 1)
+          }
+          this.my_app_list.splice(r,0,empty_tag)
+          console.log(this.my_app_list)
+          this.placeholderIndex = r
+        }
+      }
+      else if (e.type == 'touchend') {
+        let index = e.currentTarget.dataset.index * 1
+        this.my_app_list[index].transform = 'left:0;top:0'
+        this.my_app_list.splice(index,1)
+        this.my_app_list.splice(this.placeholderIndex,1)
+        this.my_app_list.splice(this.placeholderIndex,0,this.copy)
+        this.openData = -1
+        this.get_list(this.my_app_list)
+      }
+    }, 
+    del_add(e) {
+      let my_arr = []
+      let toggle = false
+      let id = e.currentTarget.dataset.id
+      let ifChooseTag = e.currentTarget.dataset.choose
+      if (this.my_app_list.length >= this.all_app_list.maxNum && ifChooseTag * 1 === 0) {
+        this.height_tag=750;
+        cml.showToast({
+          message: "最多显示"+this.maxNum+"个应用哦",
+          duration: 1000
+        })
+        toggle = false
+      } else {
+        toggle = true
+      }
+      if (toggle === true) {
+        for (let i in this.all_app_list.list) {
+          if (id * 1 === this.all_app_list.list[i].id * 1) {
+            this.all_app_list.list[i].ifChoose = (this.all_app_list.list[i].ifChoose * 1) === 0 ? 1 : 0
+          }
+          if (this.all_app_list.list[i].ifChoose * 1 === 1) {
+            my_arr.push(JSON.parse(JSON.stringify(this.all_app_list.list[i])))
+          }
+        }
+        this.get_list(my_arr)
+        console.log(this.my_app_list)
+        this.height_tag=-1;
+      }
     },
     testclick () {
         lsitenUtils.open('https://www.baidu.com', 0)
@@ -360,6 +374,7 @@ export default new Index();
 
 </script>
 <style scoped>
+
   .jw-title-name{
     font-size: 30cpx;
     font-weight: bold;
@@ -367,10 +382,15 @@ export default new Index();
     padding-top: 30cpx;
   }
   .jw-icon-relative{
+    background-color: #f2f2f2;
     position: relative;
-    width: 150cpx;
+    width: 160cpx;
     height: 130cpx;
     padding: 5cpx;
+    margin:22cpx 0 0 22cpx;
+  }
+  .jw-relative{
+    position: relative;
   }
   .jw-icon-right-top{
     position: absolute;
@@ -385,7 +405,7 @@ export default new Index();
     text-align: center;
   }
   .jw-icon-center{
-    width: 100%;
+    width: 160cpx;
     height: 90cpx;
     line-height: 100cpx;
     text-align: center;
@@ -393,7 +413,7 @@ export default new Index();
     color:#ff3f00;
   }
   .jw-icon-text{
-    width: 100%;
+    width: 160cpx;
     height:30cpx;
     text-align: center;
     font-size: 25cpx;
@@ -401,10 +421,11 @@ export default new Index();
     color:#333;
   }
   .jw-icon-empty{
-    width: 150cpx;
+    width: 160cpx;
     height: 130cpx;
     border: 5cpx dashed #f2f2f2;
     background-color: #fff;
+    margin:22cpx 0 0 22cpx;
   }
   .jw-icon-red{
     color:#ff3f00;
@@ -416,28 +437,37 @@ export default new Index();
     color: #29bd52;
   }
   .jw-my-app{
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    height: 260cpx;
+    /*box-shadow: 0 0 10px rgba(0,0,0,0.3);*/
     background-color: #fff;
-    height: 540cpx;
+    border-bottom:10cpx solid #f2f2f2 ;
+  }
+  .jw-my-app-h410{
+    height: 410cpx;
+  }
+  .jw-my-app-h560{
+    height: 560cpx;
   }
   .jw-box-flex{
     position: fixed;
   }
-  .jw-box-w100b{
-    width: 100%;
-  }
   .jw-box-shadow{
     box-shadow: 0 0 10px rgba(0,0,0,0.3)
+  }
+  .jw-drag-get{
+    border: 5cpx solid #9ba4f2;
+  }
+  .drag_move{
+    position: absolute;
+    border: 5cpx solid #f2dc97;
+    z-index: 999;
   }
 </style>
 <script cml-type="json">
 {
   "base": {
     "usingComponents": {
-    "w-icon":"/components/w-icon/w-icon",
-    "c-tab": "cml-ui/components/c-tab/c-tab",
-    "c-tab-pane": "cml-ui/components/c-tab-pane/c-tab-pane",
-    "c-tab-pane-item": "cml-ui/components/c-tab-pane-item/c-tab-pane-item"
+    "w-icon":"/components/w-icon/w-icon"
   }
   },
   "wx": {

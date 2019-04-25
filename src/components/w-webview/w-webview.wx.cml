@@ -1,6 +1,8 @@
 <template>
   <view style="height: 100%;width: 100%">
-    <web-view src="{{url}}" name="{{name}}"></web-view>
+    <view>
+      <web-view src="{{url}}" name="{{name}}"></web-view>
+    </view>
   </view>
 </template>
 

@@ -4,7 +4,7 @@
       <text class="w-header-title" style="height:88cpx; width:100%; line-height:88cpx; text-align: center;font-size: 40cpx; background-color:{{bg_color}}; color:{{color}}">{{title}}</text>
       <view  c-bind:click="close_it" class="w-header-icon-out"><view class="w-header-icon-outer"><w-icon name="&#xe6f7;" class="w-header-icon"></w-icon></view></view>
     </view>
-    <slot>Content</slot>
+    <slot></slot>
   </view>
 </template>
 <script>

@@ -17,6 +17,5 @@ type EventDetail = {
 interface WIconInterface {
   name: String,
   onshow(eventDetail: EventDetail): void;
-  color:String,
 }
 </script>
