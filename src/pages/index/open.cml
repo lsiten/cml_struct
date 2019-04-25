@@ -8,8 +8,15 @@
 <!--        >-->
 <!--        </button>-->
 <!--    </view>-->
-    <view class="jw-my-app {{my_app_list.length>3?'jw-my-app-h410':''}} {{my_app_list.length-1>7?'jw-my-app-h560':''}}"><!-- class="{{my_app_list.list.length % 4===0?'jw-my-app'+Math.ceil(my_app_list.list.length / 4)+'-full':'jw-my-app'+Math.ceil(my_app_list.list.length / 4)+'-empty'}}"-->
-      <text class="jw-title-name">我的应用</text>
+    <view class="jw-my-app {{my_app_list.length-1>3?'jw-my-app-h410':''}} {{my_app_list.length-1>7?'jw-my-app-h560':''}}"><!-- class="{{my_app_list.list.length % 4===0?'jw-my-app'+Math.ceil(my_app_list.list.length / 4)+'-full':'jw-my-app'+Math.ceil(my_app_list.list.length / 4)+'-empty'}}"-->
+      <row height="{{50}}" justify="space-between">
+        <col width="{{350}}" height="{{100}}">
+          <text class="jw-title-name">我的应用</text>
+        </col>
+        <col width="{{200}}"  height="{{100}}">
+          <text class="jw-title-edit" c-bind:tap="change_edit">{{editTag==0?'编辑':'保存'}}</text>
+        </col>
+      </row>
       <view >
         <row justify="start" margin="{{30}}" wrap="{{true}}">
             <block  c-for="{{my_app_list}}" c-if="my_app_list.length&&(index < maxNum*1)" >
@@ -20,15 +27,17 @@
                 c-key="item.id"
                 data-choose="{{item.ifChoose}}"
                 data-id="{{item.id}}"
-                c-bind:tap="del_add"
                 c-bind:touchstart="drag_event"
                 c-bind:touchmove="drag_event"
                 c-bind:touchend="drag_event"
+                c-bind:tap="del_add"
                 style="{{item.transform}}"
               >
                 <view>
-                  <w-icon class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}"
-                          name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
+                  <w-icon
+                    c-if="editTag==1"
+                    class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}"
+                    name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
                   <w-icon class="jw-icon-center jw-icon-blue" name="{{item.icon}}"></w-icon>
                 </view>
                 <text class="jw-icon-text">{{item.textName}}</text>
@@ -47,9 +56,9 @@
         <view >
           <row justify="start" margin="{{30}}" wrap="{{true}}">
             <block  c-for="{{all_app_list.list}}" c-if="all_app_list.list.length" >
-              <view class="{{item.id?'jw-icon-relative':'jw-icon-empty'}}" c-if="item.id" data-id="{{item.id}}" data-choose="{{item.ifChoose}}" c-bind:tap="del_add" >
+              <view class="{{item.id?'jw-icon-relative':'jw-icon-empty'}}" c-if="item.id"  data-id="{{item.id}}" data-choose="{{item.ifChoose}}" c-bind:tap="del_add" >
                 <view>
-                  <w-icon class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}" name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
+                  <w-icon c-if="editTag==1" class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}" name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
                   <w-icon class="jw-icon-center jw-icon-blue" name="{{item.icon}}"></w-icon>
                 </view>
                 <text class="jw-icon-text">{{item.textName}}</text>
@@ -73,6 +82,8 @@ import cml from 'chameleon-api'
 let preX=null,preY=null
 class Index  {
   data = {
+    editTag:0,// 0:可点击跳转链接，1：可编辑app
+    timeAdd:0,// 点击后时间
     placeholderIndex: -1,
     openData: null,
     start_event:null,//被拖拽的对象
@@ -243,9 +254,11 @@ class Index  {
       }
     }
     this.get_list(my_arr)
-
   }
   methods = {
+    change_edit(e){
+      this.editTag=this.editTag==0?1:0
+    },
     handleTabTap(e){
       this.activeLabel = e.detail.label;
     },
@@ -279,6 +292,7 @@ class Index  {
       return array
     },
     drag_event(e) {
+      if (this.editTag==0) return
       let empty_tag={}
       let axisArr=[]
       if (e.type == 'touchstart') {
@@ -331,35 +345,40 @@ class Index  {
         this.my_app_list.splice(this.placeholderIndex,0,this.copy)
         this.openData = -1
         this.get_list(this.my_app_list)
+        this.timeAdd=0
       }
     }, 
     del_add(e) {
-      let my_arr = []
-      let toggle = false
-      let id = e.currentTarget.dataset.id
-      let ifChooseTag = e.currentTarget.dataset.choose
-      if (this.my_app_list.length >= this.all_app_list.maxNum && ifChooseTag * 1 === 0) {
-        this.height_tag=750;
-        cml.showToast({
-          message: "最多显示"+this.maxNum+"个应用哦",
-          duration: 1000
-        })
-        toggle = false
-      } else {
-        toggle = true
-      }
-      if (toggle === true) {
-        for (let i in this.all_app_list.list) {
-          if (id * 1 === this.all_app_list.list[i].id * 1) {
-            this.all_app_list.list[i].ifChoose = (this.all_app_list.list[i].ifChoose * 1) === 0 ? 1 : 0
-          }
-          if (this.all_app_list.list[i].ifChoose * 1 === 1) {
-            my_arr.push(JSON.parse(JSON.stringify(this.all_app_list.list[i])))
-          }
+      if(this.editTag==1){
+        let my_arr = []
+        let toggle = false
+        let id = e.currentTarget.dataset.id
+        let ifChooseTag = e.currentTarget.dataset.choose
+        if (this.my_app_list.length >= this.all_app_list.maxNum && ifChooseTag * 1 === 0) {
+          this.height_tag=750;
+          cml.showToast({
+            message: "最多显示"+this.maxNum+"个应用哦",
+            duration: 1000
+          })
+          toggle = false
+        } else {
+          toggle = true
         }
-        this.get_list(my_arr)
-        console.log(this.my_app_list)
-        this.height_tag=-1;
+        if (toggle === true) {
+          for (let i in this.all_app_list.list) {
+            if (id * 1 === this.all_app_list.list[i].id * 1) {
+              this.all_app_list.list[i].ifChoose = (this.all_app_list.list[i].ifChoose * 1) === 0 ? 1 : 0
+            }
+            if (this.all_app_list.list[i].ifChoose * 1 === 1) {
+              my_arr.push(JSON.parse(JSON.stringify(this.all_app_list.list[i])))
+            }
+          }
+          this.get_list(my_arr)
+          console.log(this.my_app_list)
+          this.height_tag=-1;
+        }
+      }else {
+        /*跳转url*/
       }
     },
     testclick () {
@@ -374,7 +393,12 @@ export default new Index();
 
 </script>
 <style scoped>
-
+  .jw-title-edit{
+    font-size: 28cpx;
+    margin: 30cpx 0 0 20cpx;
+    text-align: center;
+    color:#86d0f2
+  }
   .jw-title-name{
     font-size: 30cpx;
     font-weight: bold;
