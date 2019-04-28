@@ -19,34 +19,32 @@
       </row>
       <view >
         <row justify="start" margin="{{30}}" wrap="{{true}}">
-            <block  c-for="{{my_app_list}}" c-if="my_app_list.length&&(index < maxNum*1)" >
-              <view
-                class="js-drag {{item.id?'jw-icon-relative':'jw-icon-empty'}} {{openData && (openData.id === item.id)?'drag_move':''}}"
-                c-if="item&&item.id&&item.id&&(item.ifChoose==1)"
-                data-index="{{index}}"
-                c-key="item.id"
-                data-choose="{{item.ifChoose}}"
-                data-id="{{item.id}}"
-                c-bind:touchstart="drag_event"
-                c-bind:touchmove="drag_event"
-                c-bind:touchend="drag_event"
-                c-bind:tap="del_add"
-                style="{{item.transform}}"
-              >
-                <view>
-                  <w-icon
-                    c-if="editTag==1"
-                    class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}"
-                    name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
-                  <w-icon class="jw-icon-center jw-icon-blue" name="{{item.icon}}"></w-icon>
-                </view>
-                <text class="jw-icon-text">{{item.textName}}</text>
+          <block c-for="{{my_app_list}}" c-if="my_app_list.length&&(index < maxNum*1)">
+            <view
+              class="js-drag {{item.id?'jw-icon-relative':'jw-icon-empty'}} {{openData && (openData.id === item.id)?'drag_move':''}}"
+              c-if="item&&item.id&&item.id&&(item.ifChoose==1)"
+              data-index="{{index}}"
+              c-key="item.id"
+              data-choose="{{item.ifChoose}}"
+              data-id="{{item.id}}"
+              c-bind:touchstart="drag_event"
+              c-bind:touchmove="drag_event"
+              c-bind:touchend="drag_event"
+              c-bind:tap="del_add"
+              style="{{item.transform}}"
+            >
+              <view>
+                <w-icon
+                  c-if="editTag==1"
+                  class="jw-icon-right-top {{item.ifChoose==1?'':'jw-icon-blue'}}"
+                  name="{{item.ifChoose==1?'&#xe600;':'&#xe602;'}}"></w-icon>
+                <w-icon class="jw-icon-center jw-icon-blue" name="{{item.icon}}"></w-icon>
               </view>
-              <view c-if="(!item.id)&&(openData!=-1)" class="jw-icon-empty jw-drag-get"></view>
-            </block>
-            <view class="jw-icon-empty" c-if="my_app_list.length<maxNum*1"></view>
-
-
+              <text class="jw-icon-text">{{item.textName}}</text>
+            </view>
+            <view c-if="(!item.id)&&(openData!=-1)" class="jw-icon-empty jw-drag-get"></view>
+          </block>
+          <view class="jw-icon-empty" c-if="my_app_list.length<maxNum*1"></view>
         </row>
       </view>
     </view>
@@ -295,8 +293,11 @@ class Index  {
       if (this.editTag==0) return
       let empty_tag={}
       let axisArr=[]
+      let myX=0
+      let myY=0
       if (e.type == 'touchstart') {
         let index = e.currentTarget.dataset.index * 1
+        this.currentIndex=index
         this.copy = this.my_app_list[index]
         this.openData = this.my_app_list[index]
         // 获取所有item坐标
@@ -310,30 +311,32 @@ class Index  {
         const cY = e.changedTouches[0].clientY
         this.openData.transform = 'left:' + cX + 'cpx;top:' + cY + 'cpx'
       } else if (e.type == 'touchmove') {
+        let index = e.currentTarget.dataset.index * 1
         if (!this.openData) return
         let r = this.placeholderIndex
         // 目标item移动
         const cX = e.changedTouches[0].clientX
         const cY = e.changedTouches[0].clientY
-        this.openData.transform = 'left:' + cX + 'cpx;top:' + cY + 'cpx'
+        myX=cX-myX
+        myY=cY-myY
+        this.openData.transform = 'left:' + myX + 'cpx;top:' + myY + 'cpx'
         //  对比坐标，查看当前移动的位置
         let h = cml.cpx2px(130)
         let w = cml.cpx2px(160)
-
         this.move_axis.map((item, index) => {
-          if (cY >= item.y*2 - h && cY <= item.y*2 + h && cX > item.x*2 - w && cX <= item.x*2) {
+          if (cY > item.y && cY <= item.y + h && cX > item.x - w && cX <= item.x) {
             r = index
+          }else if(cY>item.y*2 + h&&cX>item.x*2+w){
+            r=this.move_axis.length
           }
         })
-
         // 将占位符移动到当前位
         console.log(r+"_"+this.placeholderIndex)
-        if (this.placeholderIndex !== r) {
-          if(!this.my_app_list[this.placeholderIndex].id){
+        if(this.placeholderIndex !== r){
+          if (!this.my_app_list[this.placeholderIndex].id) {
             this.my_app_list.splice(this.placeholderIndex, 1)
           }
-          this.my_app_list.splice(r,0,empty_tag)
-          console.log(this.my_app_list)
+          this.my_app_list.splice(r, 0, empty_tag)
           this.placeholderIndex = r
         }
       }
@@ -343,6 +346,8 @@ class Index  {
         this.my_app_list.splice(index,1)
         this.my_app_list.splice(this.placeholderIndex,1)
         this.my_app_list.splice(this.placeholderIndex,0,this.copy)
+
+
         this.openData = -1
         this.get_list(this.my_app_list)
         this.timeAdd=0
